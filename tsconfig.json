@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "outDir": "",
+    "lib": [ "es2015", "dom" ],
+    "sourceMap": true,
+    "rootDir": ".",
+    "types": [ "slickgrid"]
+  },
+  "exclude": [
+    "node_modules",
+    ".vscode-test"
+  ]
+}

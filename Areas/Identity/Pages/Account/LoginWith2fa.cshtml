@@ -1,0 +1,63 @@
+﻿@page
+@model LoginWith2faModel
+@{
+    ViewData["Title"] = "Double authentification";
+}
+
+
+<div class="login-box">
+    <div class="login-logo">
+        <a href="~/"><b>Application Alchi</b></a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+        <div class="card-body login-card-body">
+            <p class="login-box-msg">S'identifier avec la double authentification</p>
+
+            <form method="post" asp-route-returnUrl="@Model.ReturnUrl">
+                @*<h4>Utiliser votre compte utilisateur pour l'application Alchi.</h4>
+            <hr />*@
+                <input asp-for="RememberMe" type="hidden" />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="input-group mb-3">
+                    @*<label asp-for="Input.TwoFactorCode" class="form-control"></label>*@
+                    <input asp-for="Input.TwoFactorCode" class="form-control" autocomplete="off" placeholder="Code" />
+                    <div class="input-group-append">
+                        <span class="fa fa-envelope input-group-text"></span>
+                    </div>
+                    <span asp-validation-for="Input.TwoFactorCode" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    <div class="col-7">
+                        <div class="checkbox icheck">
+                            <label asp-for="Input.RememberMachine">
+                                <input asp-for="Input.RememberMachine" />
+                                @Html.DisplayNameFor(m => m.Input.RememberMachine)
+                            </label>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-5">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">S'identifier</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+
+                <p class="mb-1">
+                    Pas d'accès à votre appareil d'authentification ? Vous pouvez
+                    <a id="recovery-code-login" asp-page="./LoginWithRecoveryCode" asp-route-returnUrl="@Model.ReturnUrl">vous identifier avec un code de récupération</a>.
+                </p>
+                <p class="mb-0">
+                    <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl" class="text-center">Créer un nouveau compte</a>
+                </p>
+            </form>
+        </div>
+        <!-- /.login-card-body -->
+    </div>
+</div>
+<!-- /.login-box -->
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

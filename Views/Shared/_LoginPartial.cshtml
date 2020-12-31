@@ -1,0 +1,41 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using TestCrud.Data
+@inject SignInManager<AlchiUser> SignInManager
+@inject UserManager<AlchiUser> UserManager
+
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <a class="nav-link" data-toggle="dropdown" href="#">
+        <i class="fa fa-user-o"></i>
+    </a>
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <span class="dropdown-item dropdown-header">@User.Identity.Name</span>
+        <div class="dropdown-divider"></div>
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">
+            <i class="fa fa-user mr-2"></i> Modifier le profile
+            <span class="float-right text-muted text-sm"></span>
+        </a>
+        <div class="dropdown-divider"></div>
+        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button type="submit" class="nav-link btn btn-link text-dark">
+                <i class="fa fa-sign-out mr-2"></i> Se&nbsp;déconnecter
+                <span class="float-right text-muted text-sm"></span>
+            </button>
+        </form>
+    </div>
+}
+else
+{
+    <a class="nav-link" data-toggle="dropdown" href="#">
+        <i class="fa fa-user-o"></i>
+        <span class="badge badge-warning navbar-badge">15</span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <span class="dropdown-item dropdown-header">Utilisateur</span>
+        <div class="dropdown-divider"></div>
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        <div class="dropdown-divider"></div>
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    </div>
+}

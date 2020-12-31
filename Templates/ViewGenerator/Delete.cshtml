@@ -1,0 +1,179 @@
+﻿@inherits Microsoft.VisualStudio.Web.CodeGeneration.Templating.RazorTemplateBase
+@using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore
+@using System.Collections.Generic
+@using System.Linq
+@@model @Model.ViewDataTypeName
+
+@{
+    if (Model.IsPartialView)
+    {
+    }
+    else if (Model.IsLayoutPageSelected)
+    {
+@:@@{
+    @:ViewData["Title"] = "Fiche @Model.ModelMetadata.ModelType.Name";
+        if (!string.IsNullOrEmpty(Model.LayoutPageFile))
+        {
+    @:Layout = "@Model.LayoutPageFile";
+        }
+    @:var newLocalId = Guid.NewGuid();
+    @:var modelTypeName = ViewData.ModelMetadata.ModelType.Name;
+    @:var hideLayout = ViewBag.Layout is bool bLayout && bLayout == false;
+    @:string errorMessage = ViewBag.ErrorMessage;
+    @:if (hideLayout)
+    @:{
+        @:Layout = null;
+    @:}
+    @:else
+    @:{
+        @:@@section CssStyle{
+            @:@@{
+                @://await Html.RenderPartialAsync("_SlickGridStylePartial");        // pour la grille
+            @:}
+        @:}
+
+        @:@@section Scripts{
+            @:@@{
+                @://await Html.RenderPartialAsync("_SlickGridScriptsPartial");        // pour la grille
+                @:await Html.RenderPartialAsync("_CrudScriptsPartial");             // pour les fenêtres de dialog du CRUD
+                @:await Html.RenderPartialAsync("_SpaEntitySignalScriptsPartial");  // pour les mises à jour instantanées de la page
+                @:<script type='text/javascript'>
+                @:    $(function () {
+                @:        InitCrud('@@(ViewContext.RouteData.Values["controller"])');
+                @:    });
+                @:</script>
+            @:}
+        @:}
+
+    @:}
+@:}
+    }
+    else
+    {
+@:@@{
+    @:Layout = null;
+@:}
+@:
+@:<!DOCTYPE html>
+@:
+@:<html>
+@:<head>
+    @:<meta name="viewport" content="width=device-width" />
+    @:<title>@Model.ViewName</title>
+@:</head>
+@:<body>
+@:
+        //    PushIndent("    ");
+    }
+@:@@if (!hideLayout)
+@:{
+    @:@@Html.Raw($"<h1>{ViewData["Title"]}</h1><div class='card'><div class='card-header'><h3 class='card-title'></h3></div><div class='card-body'><div class='flex-layout s-Panel' id='crudPrincipal'>");
+    @:}
+    @:<div id="@@(newLocalId)_DialogContent" class="s-DialogContent ui-tabs ui-corner-all ui-widget ui-widget-content">
+    @:<ul role="tablist" class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
+        @:<li role="tab" tabindex="0" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab ui-tabs-active ui-state-active" aria-controls="@@(newLocalId)_Tab1" aria-labelledby="@@(newLocalId)_Principal" aria-selected="true" aria-expanded="true"><a href="#" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="@@(newLocalId)_Principal"><span>Principal</span></a></li>
+    @:</ul>
+    @:<div id="@@(newLocalId)_Tab1" class="tab-pane ui-tabs-panel ui-corner-bottom ui-widget-content" aria-labelledby="@@(newLocalId)_Principal" role="tabpanel" aria-hidden="false" style="">
+    @:<div class="s-Form">
+            @:<form asp-action="@Model.ViewName" asp-route-layout="@@(!hideLayout)" data-ajax="@@(hideLayout.ToString().ToLower())" data-ajax-success="AjaxFormSuccess" data-ajax-failure="AjaxFormFailure">
+    @:<div class="ajax-error-text text-danger" style="@@(String.IsNullOrWhiteSpace(errorMessage) ? "display:none" : "")">@@errorMessage</div>
+    @:<div id="@@(newLocalId)_Tab1_Toolbar" class="s-DialogToolbar s-Toolbar clearfix">
+    @:<div class="tool-buttons">
+    @:<div class="buttons-outer">
+    @:<div class="buttons-inner">
+    @:<div class="tool-button delete-button">
+    @:<div class="button-outer"><span class="button-inner">Supprimer</span></div>
+@:</div>
+@:</div>
+@:</div>
+@:</div>
+@:</div>
+
+    @:<div class="fieldset" data-entity="@@modelTypeName" data-id="@@Model.Id" data-action="Delete">
+    @:<div class="s-PropertyGrid">
+    @:<div class="category-links">
+    @:<a class="category-link" tabindex="-1" href="#">Infos principales</a>
+    @:<div class="clear"></div>
+@:</div>
+
+    @:<div class="categories">
+    @:<div class="category">
+    @:<div class="category-title">
+    @:<a class="category-anchor" name="@@(newLocalId)_Tab1_Cat1">Infos principales</a>
+@:</div>
+
+
+        Dictionary<string, IPropertyMetadata> propertyLookup = ((IModelMetadata)Model.ModelMetadata).Properties.ToDictionary(x => x.PropertyName, x => x);
+        Dictionary<string, INavigationMetadata> navigationLookup = ((IModelMetadata)Model.ModelMetadata).Navigations.ToDictionary(x => x.AssociationPropertyName, x => x);
+        foreach (var item in Model.ModelMetadata.ModelType.GetProperties())
+        {
+            if (propertyLookup.TryGetValue(item.Name, out IPropertyMetadata property)
+                && property.Scaffold && !property.IsForeignKey && !property.IsPrimaryKey)
+            {
+                var divName = $"name='{item.Name}'";
+                <div class="field">
+                    <label class="caption">
+                        @@Html.DisplayNameFor(model => model.@GetValueExpression(property))
+                    </label>
+                    <div @divName>
+                        @@Html.DisplayFor(model => model.@GetValueExpression(property))
+                    </div>
+                </div>
+            }
+            else if (navigationLookup.TryGetValue(item.Name, out INavigationMetadata navigation))
+            {
+                var divName = $"name='{navigation.ForeignKeyPropertyNames[0]}'";
+      <div class="field">
+          <label class="caption">
+              @@Html.DisplayNameFor(model => model.@GetValueExpression(navigation))
+          </label>
+          <div @divName data-entity="@navigation.EntitySetName" data-id="@@Model.@navigation.ForeignKeyPropertyNames[0]">
+              @@Html.DisplayFor(model => ((ModelBase)model.@GetValueExpression(navigation)).DisplayValue)
+          </div>
+      </div>
+            }
+        }
+        foreach (var property in Model.ModelMetadata.Properties)
+        {
+            if(property.IsPrimaryKey){
+        @:<input type="hidden" asp-for="@GetValueExpression(property)" />
+            }
+        }
+        
+        }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@{
+    // The following code closes the tag used in the case of a view using a layout page and the body and html tags in the case of a regular view page
+    if (!Model.IsPartialView && !Model.IsLayoutPageSelected)
+    {
+@:</body>
+@:</html>
+    }
+}
+@functions
+{
+    // Do we need to use this in conjunction with the PrimaryKey check?
+    bool IsPropertyGuid(IPropertyMetadata property)
+    {
+        return string.Equals("System.Guid", property.TypeName, StringComparison.OrdinalIgnoreCase);
+    }
+
+    string GetValueExpression(IPropertyMetadata property)
+    {
+        return property.PropertyName;
+    }
+
+    string GetValueExpression(INavigationMetadata navigation)
+    {
+        return navigation.AssociationPropertyName;
+    }
+}

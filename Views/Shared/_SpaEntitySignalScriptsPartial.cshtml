@@ -1,0 +1,140 @@
+﻿@{
+    var modelType = ViewData.ModelMetadata.ModelType;
+    var modelTypeName = modelType.GetGenericArguments().Length > 0 ? modelType.GetGenericArguments()[0].Name : modelType.Name;
+}
+
+<script src="https://cdn.jsdelivr.net/npm/@@microsoft/signalr@@3.1.3/dist/browser/signalr.min.js"></script>
+
+<script src="~/js/entitySignal.js" asp-append-version="true"></script>
+<script type="text/javascript">
+
+    function pageCrudItem(entityTypeName, action, item, idColumnName) {
+
+        var currentGridTabDataView = eval('gridTabDataView_' + entityTypeName);
+        if (!Array.isArray(currentGridTabDataView))
+            return;
+
+        switch (action) {
+            case 4:  // Create an item
+                // Create an option for all selects elements
+                $("select[data-entity='" + entityTypeName + "']").each(function (i, currentElement) {
+                    jqCurrrentElement = $(currentElement);
+                    jqCurrrentElement.append($("<option></option>")
+                        .attr("value",item[idColumnName])
+                        .text(item["DisplayValue"]));
+                    jqCurrrentElement.select2(optionsSelect2).trigger('change');
+                });
+                break;
+            case 3: // Edit an item
+                // Update all windows currently displayed (display, edit, delete)
+                $(".fieldset[data-entity='" + entityTypeName + "'][data-id='" + item[idColumnName] + "']").each(function (i, currentElement) {
+    //$(currentElement).closest('.ui-dialog-content').dialog('close');
+    var jqCurrentElement = $(currentElement);
+    var entityTypeName = jqCurrentElement.data("entity");
+    var currentId = jqCurrentElement.data("id");
+    var actionText = jqCurrentElement.data("action");
+    if (actionText === undefined)
+        actionText = (currentId === "" || currentId === undefined || currentId === null ? "Create" : "Edit");
+    var dialogUi = jqCurrentElement.closest('.ui-dialog-content');
+    if (dialogUi.is(":visible")) {
+        //LoadCrudInDialog(dialogUi, eval("optionsShowCrud_" + entityTypeName), actionText, currentId);
+
+        for (const key in item) {
+            if (key !== idColumnName) {     // update all but not the id column
+                var currentValue = item[key] === null ? "" : item[key];
+
+                dialogUi.find("div[name='" + key + "']").each(function (i, currentElement) {
+                        if (typeof $(currentElement).data('entity') === "string") {
+                            //if (currentValue !== $(currentElement).data('id')) {
+                                $(currentElement).data('id', currentValue);
+                                currentElement.textContent = GetForeignValue($(currentElement).data('entity'), currentValue);
+                            //}
+                        }
+                        else {
+                            if (currentValue !== currentElement.textContent) {
+
+                                currentElement.textContent = currentValue;
+                            }
+                        }
+                });
+
+                dialogUi.find("textarea[name='" + key + "']").each(function (i, currentElement) {
+                    if (currentValue !== currentElement.value) {
+                        currentElement.value = currentValue;
+                    }
+                });
+                dialogUi.find("input[name='" + key + "']").each(function (i, currentElement) {
+                    if (currentValue !== currentElement.value) {
+                        currentElement.value = currentValue;
+                    }
+                });
+                dialogUi.find("select[name='" + key + "']").each(function (i, currentElement) {
+                    if (currentValue !== currentElement.value) {
+                        currentElement.value = currentValue;
+                        $(currentElement).select2(optionsSelect2).trigger('change');
+                    }
+                });
+            }
+        }
+
+
+    }
+});
+          $("div.field div:not(.fieldset)[data-entity='" + entityTypeName + "'][data-id='" + item[idColumnName] + "']").each(function (i, currentElement) {
+                                      currentElement.textContent = item["DisplayValue"];
+
+          });
+
+
+
+                // Update option for all selects elements
+                $("select[data-entity='" + entityTypeName + "'] option[value='" + item[idColumnName] + "']").each(function (i, currentElement) {
+                    jqCurrrentElement = $(currentElement);
+                    jqCurrrentElement.text(item["DisplayValue"]);
+                    console.log("SELECT2");
+                    console.log(jqCurrrentElement.parent());
+                    jqCurrrentElement.parent().select2(optionsSelect2).trigger('change');
+                });
+                break;
+            case 2:           // Delete an item
+                // Close all windows currently displayed (display, edit, delete)
+                $(".fieldset[data-entity='" + entityTypeName + "'][data-id='" + item[idColumnName] + "']").each(DeleteDialogFromFieldSet);
+                // Delete option for all selects elements
+                $("select[data-entity='" + entityTypeName + "'] option[value='" + item[idColumnName] + "']").each(function (i, currentElement) {
+                    $(currentElement).remove();
+                    jqCurrrentElement.parent().select2(optionsSelect2).trigger('change');
+                });
+                break;
+        }
+
+
+        for (var i = 0; i < currentGridTabDataView.length; i++) {
+            switch (action) {
+                case 4:
+                    // Create an item
+                    currentGridTabDataView[i].addItem(item);        // create new item in the grid
+                    break;
+                case 3: // Edit an item
+                    currentGridTabDataView[i].updateItem(item[idColumnName], item);         // update the item in the grid
+                    break;
+                case 2:
+                    // Delete an item
+                    currentGridTabDataView[i].deleteItem(item[idColumnName], item);     // delete the item in the grid
+                    break;
+            }
+        }
+
+    }
+
+
+    var clientEntitySignal = new EntitySignal.Client();
+
+
+                           //client.onDataChange("/@(ViewContext.RouteData.Values["controller"])/SubscribeToAll", urlData => {
+                           //    //grid.invalidateAllRows();
+                           //    //gridDataView.setItems(syncedList, "Id");
+                           //    //grid.setData(syncedList);
+                           //    //grid.render();
+                           // });
+
+</script>

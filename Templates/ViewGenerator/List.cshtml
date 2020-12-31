@@ -1,0 +1,114 @@
+﻿@inherits Microsoft.VisualStudio.Web.CodeGeneration.Templating.RazorTemplateBase
+@using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore
+@using System.Collections.Generic
+@using System.Linq
+@using Humanizer
+@{
+var modelNameLower = StringHumanizeExtensions.Humanize(Model.ModelMetadata.ModelType.Name, LetterCasing.LowerCase);
+@:@@model @GetEnumerableTypeExpression(Model.ViewDataTypeName)
+
+    if (Model.IsPartialView)
+    {
+    }
+    else if (Model.IsLayoutPageSelected)
+    {
+@:@@{
+    @:ViewData["Title"] = "@Model.ViewName";
+    @:var idGrid = "myGrid";
+
+        if (!string.IsNullOrEmpty(Model.LayoutPageFile))
+        {
+    @:Layout = "@Model.LayoutPageFile";
+        }
+
+    @:var modelTypeName = ViewData.ModelMetadata.ModelType.GetGenericArguments()[0].Name;
+        @:@@section CssStyle{
+        @:@@{
+            @:await Html.RenderPartialAsync("_SlickGridStylePartial");        // pour la grille
+        @:}
+    @:}
+    @:@@section Scripts{
+        @:@@{
+            @:await Html.RenderPartialAsync("_SlickGridScriptsPartial");        // pour la grille
+            @:await Html.RenderPartialAsync("_CrudScriptsPartial");             // pour les fenêtres de dialog du CRUD
+            @:await Html.RenderPartialAsync("_SpaEntitySignalScriptsPartial");  // pour les mises à jour instantanées de la page
+            @:<script type='text/javascript'>
+            @:    $(function () {
+            @:        InitCrud('@@(ViewContext.RouteData.Values["controller"])', "@@idGrid", "buttonsCrud");
+            @:    });
+            @:</script>
+        @:}
+    @:}
+        
+@:}
+
+@:
+@:<h1>@Model.ViewName</h1>
+@:
+    }
+    else
+    {
+@:@@{
+    @:Layout = null;
+@:}
+@:
+@:<!DOCTYPE html>
+@:
+@:<html>
+@:<head>
+    @:<meta name="viewport" content="width=device-width" />
+    @:<title>@Model.ViewName</title>
+@:</head>
+@:<body>
+        //    PushIndent("    ");
+    }
+
+@:<div class="card">
+    @:<div class="card-header">
+        @:<h3 class="card-title">@@ViewData["Title"]</h3>
+    @:</div>
+    @:<!-- /.card-header -->
+    @:<div class="card-body" style="">
+        @:<div id="myGridToolbar" class="s-DialogToolbar s-Toolbar clearfix">
+            @:<div class="tool-buttons">
+                @:<div class="buttons-outer">
+                    @:<div id="buttonsCrud" class="buttons-inner">
+                    @:</div>
+                @:</div>
+            @:</div>
+        @:</div>
+        @:<div id="@@idGrid" style="width:100%;height:500px;" class="gridEntity"></div>
+    @:</div>
+@:</div>
+
+    if(!Model.IsPartialView && !Model.IsLayoutPageSelected)
+    {
+        //ClearIndent();
+@:</body>
+@:</html>
+    }
+}
+@functions
+{
+    string GetPrimaryKeyName()
+    {
+        return (Model.ModelMetadata.PrimaryKeys != null && Model.ModelMetadata.PrimaryKeys.Length == 1)
+        ? Model.ModelMetadata.PrimaryKeys[0].PropertyName
+        : null;
+    }
+
+    string GetValueExpression(IPropertyMetadata property)
+    {
+        return property.PropertyName;
+    }
+
+    string GetValueExpression(INavigationMetadata navigation)
+    {
+        return navigation.AssociationPropertyName;
+    }
+
+    string GetEnumerableTypeExpression(string typeName)
+    {
+        return "IEnumerable<" + typeName + ">";
+    }
+}

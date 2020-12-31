@@ -1,0 +1,50 @@
+﻿@page
+@model ExternalLoginModel
+@{
+    ViewData["Title"] = "Créer un compte";
+}
+
+
+
+<div class="login-box">
+    <div class="login-logo">
+        <a href="~/"><b>Application Alchi</b></a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+        <div class="card-body login-card-body">
+            <p class="login-box-msg">
+                Vous vous êtes authentifié avec succès à votre compte <strong>@Model.LoginProvider</strong>.
+                Merci d'entrer votre adresse email pour ce site et cliquer sur le bouton "Créer un compte" pour vous connecter.
+            </p>
+
+            <form asp-page-handler="Confirmation" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <h4>Associer avec votre compte @Model.LoginProvider.</h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="input-group mb-3">
+                    @*<label asp-for="Input.Email" class="form-control"></label>*@
+                    <input asp-for="Input.Email" class="form-control" placeholder="Email" />
+                    <div class="input-group-append">
+                        <span class="fa fa-envelope input-group-text"></span>
+                    </div>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Créer un compte</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </form>
+        </div>
+        <!-- /.login-card-body -->
+    </div>
+</div>
+<!-- /.login-box -->
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

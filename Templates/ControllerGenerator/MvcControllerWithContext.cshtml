@@ -1,0 +1,451 @@
+﻿@inherits Microsoft.VisualStudio.Web.CodeGeneration.Templating.RazorTemplateBase
+@using System.Collections.Generic;
+@using System.Linq;
+@using Humanizer;
+@using Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore;
+@{var modelNameLower = StringHumanizeExtensions.Humanize(Model.ModelMetadata.ModelType.Name, LetterCasing.LowerCase);
+    Dictionary<string, IPropertyMetadata> propertyLookup = ((IModelMetadata)Model.ModelMetadata).Properties.ToDictionary(x => x.PropertyName, x => x);
+    Dictionary<string, INavigationMetadata> navigationLookup = ((IModelMetadata)Model.ModelMetadata).Navigations.ToDictionary(x => x.AssociationPropertyName, x => x);
+@://A couper/coller dans le fichier "/wwwroot/js/DbTablesDef.js"
+@://------------- @Model.ControllerRootName (@Model.ModelMetadata.ModelType.Name) -------------// DEBUT
+@:var optionsShowCrud_@Model.ControllerRootName = {
+    @:apiEntity: "@Model.ModelMetadata.ModelType.Name",
+    @:subEntities: [
+    foreach (var entityName in navigationLookup.Select(x => x.Value.EntitySetName).Distinct())
+    {
+            @:"@entityName",
+    }
+        @:],
+    @:apiUrl: "/api/@Model.ModelMetadata.ModelType.Name",
+    @:viewUrl: "/@Model.ControllerRootName",
+    @:actionCreateLabel: "Créer @modelNameLower",
+    @:actionEditLabel: "Modifier @modelNameLower",
+    @:actionDeleteLabel: "Supprimer @modelNameLower",
+    @:actionDetailsLabel: "Fiche @modelNameLower",
+    @:infosEntityToEval: "' (' + item.DisplayValue + ')'",
+    @:gridColumns: [
+        @:{
+            @:id: "DisplayValue",
+            @:field: "DisplayValue",
+            @:name: "Infos"
+        @:},
+    foreach (var item in Model.ModelMetadata.ModelType.GetProperties())
+    {
+        if (propertyLookup.TryGetValue(item.Name, out IPropertyMetadata property)
+        && property.Scaffold && !property.IsForeignKey && !property.IsPrimaryKey)
+        {
+        @:{
+            @:id: "@GetValueExpression(property)",
+            @:field: "@GetValueExpression(property)",
+            @:name: "@GetValueExpression(property).Humanize()"
+        @:},
+        }
+        else if (navigationLookup.TryGetValue(item.Name, out INavigationMetadata navigation))
+        {
+        @:{
+            /*
+            @:id: "@navigation.DisplayPropertyName",
+            @:field: "@navigation.DisplayPropertyName",
+            @:name: "@((navigation.DisplayPropertyName).Humanize())"
+            */
+            @:id: "@GetValueExpression(navigation)",
+            @:field: "@GetValueExpression(navigation)",
+            @:name: "@GetValueExpression(navigation).Humanize()"
+        @:},
+        }
+    }
+}
+    ],
+    gridOptions:
+    {
+        columnPicker:
+        {
+            columnTitle: "Columns",
+            hideForceFitButton: false,
+            hideSyncResizeButton: false,
+            forceFitTitle: "Force fit columns",
+            syncResizeTitle: "Synchronous resize",
+        },
+        enableColumnReorder: true,
+        multiColumnSort: true,
+        editable: true,
+        enableAddRow: true,
+        enableCellNavigation: true,
+        asyncEditorLoading: true,
+        forceFitColumns: false,
+        topPanelHeight: 25
+    }
+};
+//------------- @Model.ControllerRootName (@Model.ModelMetadata.ModelType.Name) -------------// FIN
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using EntitySignal.Services;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using TestCrud.Extensions;
+
+@{
+    foreach (var namespaceName in Model.RequiredNamespaces)
+    {
+@:using @namespaceName;
+    }
+}
+
+namespace @Model.ControllerNamespace
+{
+@{
+    string routePrefix;
+    if (String.IsNullOrEmpty(Model.AreaName))
+    {
+        routePrefix = Model.ControllerRootName;
+    }
+    else
+    {
+        routePrefix = Model.AreaName + "/" + Model.ControllerRootName;
+    }
+    var modelProperties = new List<string>();
+    foreach (var property in Model.ModelMetadata.Properties)
+    {
+        if (property.Scaffold)
+        {
+            modelProperties.Add(property.PropertyName);
+        }
+    }
+    var bindString = string.Join(",", modelProperties);
+    var contextTypeName = Model.ContextTypeName;
+    var entitySetName = Model.ModelMetadata.EntitySetName;
+    var entitySetVar = Model.EntitySetVariable ??
+        (String.IsNullOrEmpty(entitySetName)
+            ? entitySetName
+            : (entitySetName.Substring(0, length: 1).ToLowerInvariant() + entitySetName.Substring(1)));
+    var primaryKeyName = Model.ModelMetadata.PrimaryKeys[0].PropertyName;
+    var primaryKeyShortTypeName = Model.ModelMetadata.PrimaryKeys[0].ShortTypeName;
+    var primaryKeyType = Model.ModelMetadata.PrimaryKeys[0].TypeName;
+    var primaryKeyNullableTypeName = GetNullableTypeName(primaryKeyType, primaryKeyShortTypeName);
+    var lambdaVar = Model.ModelVariable[0];
+    var relatedProperties = new Dictionary<string, dynamic>();
+    foreach (var nav in Model.ModelMetadata.Navigations)
+    {
+        relatedProperties.Add(nav.AssociationPropertyName, nav);
+
+    }
+
+    var inlineIncludes = "";
+    foreach (var property in relatedProperties.Values)
+    {
+        inlineIncludes += string.Format("{0}                .Include({1} => {1}.{2})", Environment.NewLine, lambdaVar, property.AssociationPropertyName);
+    }
+
+    if (!string.IsNullOrEmpty(Model.AreaName))
+    {
+    @:@string.Format("[Area(\"{0}\")]", Model.AreaName)
+    }
+}
+    [Authorize]
+    public class @Model.ControllerName : Controller
+    {
+        private readonly @Model.ContextTypeName _context;
+        private EntitySignalSubscribe _entitySignalSubscribe;
+
+        public @(Model.ControllerName)(@Model.ContextTypeName context, EntitySignalSubscribe entitySignalSubscribe)
+        {
+            _context = context;
+            _entitySignalSubscribe = entitySignalSubscribe;
+        }
+
+        [HttpGet]
+        [ResponseCache(NoStore = true, Duration = 0)]
+        public ActionResult<IEnumerable<@entitySetName>> SubscribeToAll()
+        {
+            _entitySignalSubscribe.Subscribe<@entitySetName>();
+            return _context.@(entitySetName).ToList();
+        }
+
+        // GET: @routePrefix
+@{
+        @:public async Task<IActionResult> Index()
+        @:{
+    var includeExpressions = "";
+    includeExpressions = String.Join("", relatedProperties
+        .Values
+        .Select(property => String.Format(".Include({0} => {0}.{1})", lambdaVar, property.AssociationPropertyName)));
+    if (!String.IsNullOrEmpty(includeExpressions))
+    {
+            @:var @entitySetVar = _context.@entitySetName@includeExpressions;
+            @:return View(await @(entitySetVar).ToListAsync());
+    }
+    else
+    {
+            @:return View(await _context.@(entitySetName).ToListAsync());
+    }
+}        }
+
+        // GET: @routePrefix/Details/5
+        public async Task<IActionResult> Details(@primaryKeyNullableTypeName id, bool layout = true)
+        {
+            ViewBag.Layout = layout;
+
+           if (id == null)
+            {
+                return NotFound();
+            }
+
+            var @Model.ModelVariable = await _context.@(entitySetName)@inlineIncludes
+                .FirstOrDefaultAsync(m => m.@primaryKeyName == id);
+            if (@Model.ModelVariable == null)
+            {
+                return NotFound();
+            }
+
+            return View(@Model.ModelVariable);
+        }
+
+        // GET: @routePrefix/Create
+        public IActionResult Create(bool layout = true)
+        {
+            ViewBag.Layout = layout;
+
+            @GetSelectLists(relatedProperties, false)
+
+            return View();
+        }
+
+        // POST: @routePrefix/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("@bindString")] @Model.ModelTypeName @Model.ModelVariable, bool layout = true)
+        {
+            ViewBag.Layout = layout;
+
+            if (ModelState.IsValid)
+            {
+@{
+    if (!string.IsNullOrEmpty(primaryKeyType) && IsGuid(primaryKeyType))
+    {
+                @:@(Model.ModelVariable).@primaryKeyName = Guid.NewGuid();
+    }
+                @:try
+                @:{
+                    @:_context.Add(@Model.ModelVariable);
+                    @:await _context.SaveChangesAsync();
+                @:}
+                @:catch (Exception e)
+                @:{
+                    @:if (layout)
+                    @:{
+                        @:ViewBag.ErrorMessage = e.GetMessage();
+                        @:return View(@Model.ModelVariable);
+                    @:}
+                    @:else
+                    @:{
+                        @:return StatusCode((int)HttpStatusCode.InternalServerError, Json(e.GetMessage()));
+                    @:}
+                @:}
+}                if (layout)
+                    return RedirectToAction(nameof(Index));
+                return NoContent();
+            }
+
+            @GetSelectLists(relatedProperties, true)
+
+            return View(@Model.ModelVariable);
+        }
+
+        // GET: @routePrefix/Edit/5
+        public async Task<IActionResult> Edit(@primaryKeyNullableTypeName id, bool layout = true)
+        {
+            ViewBag.Layout = layout;
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var @Model.ModelVariable = await _context.@(entitySetName).FindAsync(id);
+            if (@Model.ModelVariable == null)
+            {
+                return NotFound();
+            }
+
+            @GetSelectLists(relatedProperties, true)
+
+            return View(@Model.ModelVariable);
+        }
+
+        // POST: @routePrefix/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(@primaryKeyShortTypeName id, [Bind("@bindString")] @Model.ModelTypeName @Model.ModelVariable, bool layout = true)
+        {
+            ViewBag.Layout = layout;
+
+            if (id != @Model.ModelVariable.@primaryKeyName)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(@Model.ModelVariable);
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    if (e is DbUpdateConcurrencyException && !@(Model.ModelTypeName)Exists(@Model.ModelVariable.@primaryKeyName))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        if (layout)
+                        {
+                            ViewBag.ErrorMessage = e.GetMessage();
+                            return View(@Model.ModelVariable);
+                        }
+                        else
+                        {
+                            return StatusCode((int)HttpStatusCode.InternalServerError, Json(e.GetMessage()));
+                        }
+                    }
+                }
+                if (layout)
+                    return RedirectToAction(nameof(Index));
+                return NoContent();
+            }
+
+            @GetSelectLists(relatedProperties, true)
+
+            return View(@Model.ModelVariable);
+        }
+
+        // GET: @routePrefix/Delete/5
+        public async Task<IActionResult> Delete(@primaryKeyNullableTypeName id, bool layout = true)
+        {
+            ViewBag.Layout = layout;
+
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var @Model.ModelVariable = await _context.@(entitySetName)@inlineIncludes
+                .FirstOrDefaultAsync(m => m.@primaryKeyName == id);
+            if (@Model.ModelVariable == null)
+            {
+                return NotFound();
+            }
+
+            return View(@Model.ModelVariable);
+        }
+
+        // POST: @routePrefix/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(@primaryKeyShortTypeName id, bool layout = true)
+        {
+            ViewBag.Layout = layout;
+            var @Model.ModelVariable = await _context.@(entitySetName).FindAsync(id);
+
+            try
+            {
+                _context.@(entitySetName).Remove(@Model.ModelVariable);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception e)
+            {
+                if (layout)
+                {
+                    ViewBag.ErrorMessage = e.GetMessage();
+                    return View(@Model.ModelVariable);
+                }
+                else
+                {
+                    return StatusCode((int)HttpStatusCode.InternalServerError, Json(e.GetMessage()));
+                }
+            }
+            if (layout)
+                return RedirectToAction(nameof(Index));
+            return NoContent();
+        }
+
+        private bool @(Model.ModelTypeName)Exists(@primaryKeyShortTypeName id)
+        {
+            return _context.@(entitySetName).Any(e => e.@primaryKeyName == id);
+        }
+    }
+}
+@functions
+{
+    // This function converts the primary key short type name to its nullable equivalent when possible. This is required to make
+    // sure that an HTTP 400 error is thrown when the user tries to access the edit, delete, or details action with null values.
+    string GetNullableTypeName(string typeName, string shortTypeName)
+    {
+        // The exceptions are caught because if for any reason the type is user defined, then the short type name will be used.
+        // In that case the user will receive a server error if null is passed to the edit, delete, or details actions.
+        Type primaryKeyType = null;
+        try
+        {
+            primaryKeyType = Type.GetType(typeName);
+        }
+        catch
+        {
+        }
+        if (primaryKeyType != null && (!Microsoft.VisualStudio.Web.CodeGeneration.Templating.TypeUtilities.IsNullable(primaryKeyType) || IsGuid(typeName)))
+        {
+            return shortTypeName + "?";
+        }
+        return shortTypeName;
+    }
+
+    bool IsGuid(string typeName) {
+        return String.Equals("System.Guid", typeName, StringComparison.OrdinalIgnoreCase);
+    }
+}
+@functions
+{
+    string GetPrimaryKeyName()
+    {
+        return (Model.ModelMetadata.PrimaryKeys != null && Model.ModelMetadata.PrimaryKeys.Length == 1)
+        ? Model.ModelMetadata.PrimaryKeys[0].PropertyName
+        : null;
+    }
+
+    string GetValueExpression(IPropertyMetadata property)
+    {
+        return property.PropertyName;
+    }
+
+    string GetValueExpression(INavigationMetadata navigation)
+    {
+        return navigation.AssociationPropertyName;
+    }
+
+    string GetEnumerableTypeExpression(string typeName)
+    {
+        return "IEnumerable<" + typeName + ">";
+    }
+    string GetSelectLists(Dictionary<string, dynamic> relatedProperties, bool withDefaultValue, string displayValueProperty = "DisplayValue")
+    {
+        var selectLists = "";
+        foreach (var property in relatedProperties.Values)
+        {
+            selectLists += $"ViewData[\"{property.ForeignKeyPropertyNames[0]}\"] = new SelectList(_context.{property.EntitySetName}, \"{property.PrimaryKeyNames[0]}\", \"{(String.IsNullOrEmpty(displayValueProperty) ? property.DisplayPropertyName : displayValueProperty)}\"";
+            if (withDefaultValue)
+                selectLists += $", {Model.ModelVariable}.{property.ForeignKeyPropertyNames[0]}";
+            selectLists += $");{Environment.NewLine}";
+        }
+        return selectLists;
+    }
+
+}

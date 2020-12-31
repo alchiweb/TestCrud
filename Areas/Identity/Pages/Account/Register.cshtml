@@ -1,0 +1,75 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Créeation d'un compte";
+}
+
+
+
+<div class="register-box">
+    <div class="register-logo">
+        <a href="~/"><b>Application Alchi</b></a>
+    </div>
+    <!-- /.register-logo -->
+    <div class="card">
+        <div class="card-body register-card-body">
+            <p class="login-box-msg">@ViewData["Title"]</p>
+
+            <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                @*<h4>Créer un nouveau</h4>
+                <hr />*@
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="input-group mb-3">
+                    @*<label asp-for="Input.Email" class="form-control"></label>*@
+                    <input asp-for="Input.Email" class="form-control" placeholder="Email" />
+                    <div class="input-group-append">
+                        <span class="fa fa-envelope input-group-text"></span>
+                    </div>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="input-group mb-3">
+                    @*<label asp-for="Input.Password"></label>*@
+                    <input asp-for="Input.Password" class="form-control" placeholder="Mot de passe" />
+                    <div class="input-group-append">
+                        <span class="fa fa-lock input-group-text"></span>
+                    </div>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="input-group mb-3">
+                    @*<label asp-for="Input.Password"></label>*@
+                    <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Retaper le mot de passe" />
+                    <div class="input-group-append">
+                        <span class="fa fa-lock input-group-text"></span>
+                    </div>
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    @*<div class="col-8">
+                <div class="checkbox icheck">
+                    <label>
+                        <input type="checkbox"> I agree to the <a href="#">terms</a>
+                    </label>
+                </div>
+            </div>*@
+                    <!-- /.col -->
+                    <div class="col-12">
+                        <button type="submit" class="btn btn-primary btn-block btn-flat">Créer un compte</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+
+                <p class="mb-0">
+                    <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="text-center">J'ai déjà un compte</a>
+                </p>
+            </form>
+        </div>
+        <!-- /.form-box -->
+    </div><!-- /.card -->
+</div>
+<!-- /.register-box -->
+
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
