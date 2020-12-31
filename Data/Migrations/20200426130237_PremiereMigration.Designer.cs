@@ -10,7 +10,7 @@ using TestCrud.Data;
 namespace TestCrud.Data.Migrations
 {
     [DbContext(typeof(AlchiDbContext))]
-    [Migration("20200424114846_PremiereMigration")]
+    [Migration("20200426130237_PremiereMigration")]
     partial class PremiereMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

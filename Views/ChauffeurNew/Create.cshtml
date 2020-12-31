@@ -1,0 +1,183 @@
+﻿@model TestCrud.Models.ChauffeurNew
+
+@{
+    ViewData["Title"] = "Créer ChauffeurNew";
+    var newLocalId = Guid.NewGuid();
+    var modelTypeName = ViewData.ModelMetadata.ModelType.Name;
+    var hideLayout = ViewBag.Layout is bool bLayout && bLayout == false;
+    string errorMessage = ViewBag.ErrorMessage;
+    if (hideLayout)
+    {
+        Layout = null;
+    }
+    else
+    {
+        @section CssStyle{
+            @{
+                //await Html.RenderPartialAsync("_SlickGridStylePartial");        // pour la grille
+            }
+        }
+        @section Scripts{
+            @{
+                //await Html.RenderPartialAsync("_SlickGridScriptsPartial");        // pour la grille
+                await Html.RenderPartialAsync("_CrudScriptsPartial");             // pour les fenêtres de dialog du CRUD
+                await Html.RenderPartialAsync("_SpaEntitySignalScriptsPartial");  // pour les mises à jour instantanées de la page
+                <script type='text/javascript'>
+                    $(function () {
+                        InitCrud('@(ViewContext.RouteData.Values["controller"])');
+                    });
+                </script>
+            }
+        }
+    }
+}
+@if (!hideLayout)
+{
+    @Html.Raw($"<h1>{ViewData["Title"]}</h1><div class='card'><div class='card-header'><h3 class='card-title'></h3></div><div class='card-body'><div class='flex-layout s-Panel' id='crudPrincipal'>");
+    }
+    <div id="@(newLocalId)_DialogContent" class="s-DialogContent ui-tabs ui-corner-all ui-widget ui-widget-content">
+    <ul role="tablist" class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
+        <li role="tab" tabindex="0" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab ui-tabs-active ui-state-active" aria-controls="@(newLocalId)_Tab1" aria-labelledby="@(newLocalId)_Principal" aria-selected="true" aria-expanded="true"><a href="#" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="@(newLocalId)_Principal"><span>Principal</span></a></li>
+    </ul>
+    <div id="@(newLocalId)_Tab1" class="tab-pane ui-tabs-panel ui-corner-bottom ui-widget-content" aria-labelledby="@(newLocalId)_Principal" role="tabpanel" aria-hidden="false" style="">
+    <div class="s-Form">
+    <form asp-action="Create" asp-route-layout="@(!hideLayout)" data-ajax="@(hideLayout.ToString().ToLower())" data-ajax-success="AjaxFormSuccess" data-ajax-failure="AjaxFormFailure" style="width:100%">
+    <div class="ajax-error-text text-danger" style="@(String.IsNullOrWhiteSpace(errorMessage) ? "display:none" : "")">@errorMessage</div>
+    <div id="@(newLocalId)_Tab1_Toolbar" class="s-DialogToolbar s-Toolbar clearfix">
+    <div class="tool-buttons">
+    <div class="buttons-outer">
+    <div class="buttons-inner">
+    <div class="tool-button save-and-close-button">
+    <div class="button-outer"><span class="button-inner">Sauver</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+    <div class="fieldset" data-entity="@modelTypeName" data-action="Create">
+    <div class="s-PropertyGrid">
+    <div class="category-links">
+    <a class="category-link" tabindex="-1" href="#">Infos principales</a>
+    <div class="clear"></div>
+</div>
+    <div class="categories">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="category">
+    <div class="category-title">
+    <a class="category-anchor" name="@(newLocalId)_Tab1_Cat1">Infos principales</a>
+</div>
+            <div class="field">
+                <label asp-for="Operateur" class="caption"></label>
+                <input asp-for="Operateur" class="editor" />
+                <span asp-validation-for="Operateur" class="text-danger"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Abrege" class="caption"></label>
+                <input asp-for="Abrege" class="editor" />
+                <span asp-validation-for="Abrege" class="text-danger"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Nom" class="caption"></label>
+                <input asp-for="Nom" class="editor" />
+                <span asp-validation-for="Nom" class="text-danger"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Prenom" class="caption"></label>
+                <input asp-for="Prenom" class="editor" />
+                <span asp-validation-for="Prenom" class="text-danger"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Telephone" class="caption"></label>
+                <input asp-for="Telephone" class="editor" />
+                <span asp-validation-for="Telephone" class="text-danger"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Telephone2" class="caption"></label>
+                <input asp-for="Telephone2" class="editor" />
+                <span asp-validation-for="Telephone2" class="text-danger"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Portable" class="caption"></label>
+                <input asp-for="Portable" class="editor" />
+                <span asp-validation-for="Portable" class="text-danger"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Email" class="caption"></label>
+                <input asp-for="Email" class="editor" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Permis" class="caption"></label>
+                <input asp-for="Permis" class="editor" />
+                <span asp-validation-for="Permis" class="text-danger"></span>
+            </div>
+            <div class="field">
+                <label asp-for="NbHeures" class="caption"></label>
+                <input asp-for="NbHeures" class="editor" />
+                <span asp-validation-for="NbHeures" class="text-danger"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Notes" class="caption"></label>
+                <input asp-for="Notes" class="editor" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            <div class="field">
+                <label asp-for="Tiers" class="caption"></label>
+                <input asp-for="Tiers" class="editor" />
+                <span asp-validation-for="Tiers" class="text-danger"></span>
+            </div>
+            <div class="field">
+                <label asp-for="DateSortie" class="caption"></label>
+                <input asp-for="DateSortie" class="editor" />
+                <span asp-validation-for="DateSortie" class="text-danger"></span>
+            </div>
+            <div class="field">
+                <label asp-for="DateCreation" class="caption"></label>
+                <input asp-for="DateCreation" class="editor" />
+                <span asp-validation-for="DateCreation" class="text-danger"></span>
+            </div>
+            <div class="field">
+                <label asp-for="DateSaisie" class="caption"></label>
+                <input asp-for="DateSaisie" class="editor" />
+                <span asp-validation-for="DateSaisie" class="text-danger"></span>
+            </div>
+            <div class="field">
+                <label asp-for="AdresseId" class="caption"></label>
+                <select asp-for="AdresseId" class="select2" asp-items="ViewBag.AdresseId" data-entity="AdresseNew"><option value="">- Aucun -</option></select>
+                <a asp-controller="AdresseNew" asp-action="Edit" class="crud_indialog inplace-button inplace-create edit" data-entity="AdresseNew" data-field="AdresseId" data-row=""><b data="Edit"></b></a>
+                <a asp-controller="AdresseNew" asp-action="Create" class="crud_indialog inplace-button inplace-create create" data-entity="AdresseNew" data-field="AdresseId" data-row=""><b data="Create"></b></a>
+            </div>
+            <div class="field">
+                <label asp-for="AdresseChuteId" class="caption"></label>
+                <select asp-for="AdresseChuteId" class="select2" asp-items="ViewBag.AdresseChuteId" data-entity="AdresseNew"><option value="">- Aucun -</option></select>
+                <a asp-controller="AdresseNew" asp-action="Edit" class="crud_indialog inplace-button inplace-create edit" data-entity="AdresseNew" data-field="AdresseChuteId" data-row=""><b data="Edit"></b></a>
+                <a asp-controller="AdresseNew" asp-action="Create" class="crud_indialog inplace-button inplace-create create" data-entity="AdresseNew" data-field="AdresseChuteId" data-row=""><b data="Create"></b></a>
+            </div>
+            <div class="field">
+                <label asp-for="VehiculeId" class="caption"></label>
+                <select asp-for="VehiculeId" class="select2" asp-items="ViewBag.VehiculeId" data-entity="VehiculeNew"><option value="">- Aucun -</option></select>
+                <a asp-controller="VehiculeNew" asp-action="Edit" class="crud_indialog inplace-button inplace-create edit" data-entity="VehiculeNew" data-field="VehiculeId" data-row=""><b data="Edit"></b></a>
+                <a asp-controller="VehiculeNew" asp-action="Create" class="crud_indialog inplace-button inplace-create create" data-entity="VehiculeNew" data-field="VehiculeId" data-row=""><b data="Create"></b></a>
+            </div>
+            <div class="field">
+                <label asp-for="RemorqueId" class="caption"></label>
+                <select asp-for="RemorqueId" class="select2" asp-items="ViewBag.RemorqueId" data-entity="VehiculeNew"><option value="">- Aucun -</option></select>
+                <a asp-controller="VehiculeNew" asp-action="Edit" class="crud_indialog inplace-button inplace-create edit" data-entity="VehiculeNew" data-field="RemorqueId" data-row=""><b data="Edit"></b></a>
+                <a asp-controller="VehiculeNew" asp-action="Create" class="crud_indialog inplace-button inplace-create create" data-entity="VehiculeNew" data-field="RemorqueId" data-row=""><b data="Create"></b></a>
+            </div>
+            <div class="field">
+                <label asp-for="TypePlanningId" class="caption"></label>
+                <select asp-for="TypePlanningId" class="select2" asp-items="ViewBag.TypePlanningId" data-entity="TypePlanningNew"><option value="">- Aucun -</option></select>
+                <a asp-controller="TypePlanningNew" asp-action="Edit" class="crud_indialog inplace-button inplace-create edit" data-entity="TypePlanningNew" data-field="TypePlanningId" data-row=""><b data="Edit"></b></a>
+                <a asp-controller="TypePlanningNew" asp-action="Create" class="crud_indialog inplace-button inplace-create create" data-entity="TypePlanningNew" data-field="TypePlanningId" data-row=""><b data="Create"></b></a>
+            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

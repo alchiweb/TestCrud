@@ -1,15 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Html
-@{
 
-    <script type="text/javascript" src='~/plugins/chartjs-old/Chart.min.js'></script>
-    <script type="text/javascript" src='~/js/dashboard2.js'></script>
-}
-<div class="container-fluid">
+
     <!-- Info boxes -->
     <div class="row">
         <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box">
-                <span class="info-box-icon bg-info elevation-1"><i class="fa fa-gear"></i></span>
+                <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
 
                 <div class="info-box-content">
                     <span class="info-box-text">CPU Traffic</span>
@@ -25,7 +21,7 @@
         <!-- /.col -->
         <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box mb-3">
-                <span class="info-box-icon bg-danger elevation-1"><i class="fa fa-google-plus"></i></span>
+                <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
 
                 <div class="info-box-content">
                     <span class="info-box-text">Likes</span>
@@ -41,7 +37,7 @@
 
         <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box mb-3">
-                <span class="info-box-icon bg-success elevation-1"><i class="fa fa-shopping-cart"></i></span>
+                <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
 
                 <div class="info-box-content">
                     <span class="info-box-text">Sales</span>
@@ -54,7 +50,7 @@
         <!-- /.col -->
         <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box mb-3">
-                <span class="info-box-icon bg-warning elevation-1"><i class="fa fa-users"></i></span>
+                <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
 
                 <div class="info-box-content">
                     <span class="info-box-text">New Members</span>
@@ -75,12 +71,12 @@
                     <h5 class="card-title">Monthly Recap Report</h5>
 
                     <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
                         </button>
                         <div class="btn-group">
                             <button type="button" class="btn btn-tool dropdown-toggle" data-toggle="dropdown">
-                                <i class="fa fa-wrench"></i>
+                                <i class="fas fa-wrench"></i>
                             </button>
                             <div class="dropdown-menu dropdown-menu-right" role="menu">
                                 <a href="#" class="dropdown-item">Action</a>
@@ -90,8 +86,8 @@
                                 <a href="#" class="dropdown-item">Separated link</a>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-tool" data-widget="remove">
-                            <i class="fa fa-times"></i>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
                         </button>
                     </div>
                 </div>
@@ -160,7 +156,7 @@
                     <div class="row">
                         <div class="col-sm-3 col-6">
                             <div class="description-block border-right">
-                                <span class="description-percentage text-success"><i class="fa fa-caret-up"></i> 17%</span>
+                                <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 17%</span>
                                 <h5 class="description-header">$35,210.43</h5>
                                 <span class="description-text">TOTAL REVENUE</span>
                             </div>
@@ -169,7 +165,7 @@
                         <!-- /.col -->
                         <div class="col-sm-3 col-6">
                             <div class="description-block border-right">
-                                <span class="description-percentage text-warning"><i class="fa fa-caret-left"></i> 0%</span>
+                                <span class="description-percentage text-warning"><i class="fas fa-caret-left"></i> 0%</span>
                                 <h5 class="description-header">$10,390.90</h5>
                                 <span class="description-text">TOTAL COST</span>
                             </div>
@@ -178,7 +174,7 @@
                         <!-- /.col -->
                         <div class="col-sm-3 col-6">
                             <div class="description-block border-right">
-                                <span class="description-percentage text-success"><i class="fa fa-caret-up"></i> 20%</span>
+                                <span class="description-percentage text-success"><i class="fas fa-caret-up"></i> 20%</span>
                                 <h5 class="description-header">$24,813.53</h5>
                                 <span class="description-text">TOTAL PROFIT</span>
                             </div>
@@ -187,7 +183,7 @@
                         <!-- /.col -->
                         <div class="col-sm-3 col-6">
                             <div class="description-block">
-                                <span class="description-percentage text-danger"><i class="fa fa-caret-down"></i> 18%</span>
+                                <span class="description-percentage text-danger"><i class="fas fa-caret-down"></i> 18%</span>
                                 <h5 class="description-header">1200</h5>
                                 <span class="description-text">GOAL COMPLETIONS</span>
                             </div>
@@ -210,23 +206,25 @@
             <!-- MAP & BOX PANE -->
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title">Visitors Report</h3>
+                    <h3 class="card-title">US-Visitors Report</h3>
 
                     <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
                         </button>
-                        <button type="button" class="btn btn-tool" data-widget="remove">
-                            <i class="fa fa-times"></i>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
                         </button>
                     </div>
                 </div>
                 <!-- /.card-header -->
                 <div class="card-body p-0">
                     <div class="d-md-flex">
-                        <div class="p-1 flex-1" style="overflow: hidden">
+                        <div class="p-1 flex-fill" style="overflow: hidden">
                             <!-- Map will be created here -->
-                            <div id="world-map-markers" style="height: 325px; overflow: hidden"></div>
+                            <div id="world-map-markers" style="height: 325px; overflow: hidden">
+                                <div class="map"></div>
+                            </div>
                         </div>
                         <div class="card-pane-right bg-success pt-2 pb-2 pl-4 pr-4">
                             <div class="description-block mb-4">
@@ -261,16 +259,15 @@
                             <h3 class="card-title">Direct Chat</h3>
 
                             <div class="card-tools">
-                                <span data-toggle="tooltip" title="3 New Messages" class="badge badge-warning">3</span>
-                                <button type="button" class="btn btn-tool" data-widget="collapse">
-                                    <i class="fa fa-minus"></i>
+                                <span title="3 New Messages" class="badge badge-warning">3</span>
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
                                 </button>
-                                <button type="button" class="btn btn-tool" data-toggle="tooltip" title="Contacts"
-                                        data-widget="chat-pane-toggle">
-                                    <i class="fa fa-comments"></i>
+                                <button type="button" class="btn btn-tool" title="Contacts" data-widget="chat-pane-toggle">
+                                    <i class="fas fa-comments"></i>
                                 </button>
-                                <button type="button" class="btn btn-tool" data-widget="remove">
-                                    <i class="fa fa-times"></i>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
                                 </button>
                             </div>
                         </div>
@@ -280,12 +277,12 @@
                             <div class="direct-chat-messages">
                                 <!-- Message. Default to the left -->
                                 <div class="direct-chat-msg">
-                                    <div class="direct-chat-info clearfix">
+                                    <div class="direct-chat-infos clearfix">
                                         <span class="direct-chat-name float-left">Alexander Pierce</span>
                                         <span class="direct-chat-timestamp float-right">23 Jan 2:00 pm</span>
                                     </div>
-                                    <!-- /.direct-chat-info -->
-                                    <img class="direct-chat-img" src="/adminlte/img/user1-128x128.jpg" alt="message user image">
+                                    <!-- /.direct-chat-infos -->
+                                    <img class="direct-chat-img" src="~/_content/AdminLteTheme.AspNetCore/dist/img/user1-128x128.jpg" alt="message user image">
                                     <!-- /.direct-chat-img -->
                                     <div class="direct-chat-text">
                                         Is this template really for free? That's unbelievable!
@@ -295,12 +292,12 @@
                                 <!-- /.direct-chat-msg -->
                                 <!-- Message to the right -->
                                 <div class="direct-chat-msg right">
-                                    <div class="direct-chat-info clearfix">
+                                    <div class="direct-chat-infos clearfix">
                                         <span class="direct-chat-name float-right">Sarah Bullock</span>
                                         <span class="direct-chat-timestamp float-left">23 Jan 2:05 pm</span>
                                     </div>
-                                    <!-- /.direct-chat-info -->
-                                    <img class="direct-chat-img" src="/adminlte/img/user3-128x128.jpg" alt="message user image">
+                                    <!-- /.direct-chat-infos -->
+                                    <img class="direct-chat-img" src="~/_content/AdminLteTheme.AspNetCore/dist/img/user3-128x128.jpg" alt="message user image">
                                     <!-- /.direct-chat-img -->
                                     <div class="direct-chat-text">
                                         You better believe it!
@@ -310,12 +307,12 @@
                                 <!-- /.direct-chat-msg -->
                                 <!-- Message. Default to the left -->
                                 <div class="direct-chat-msg">
-                                    <div class="direct-chat-info clearfix">
+                                    <div class="direct-chat-infos clearfix">
                                         <span class="direct-chat-name float-left">Alexander Pierce</span>
                                         <span class="direct-chat-timestamp float-right">23 Jan 5:37 pm</span>
                                     </div>
-                                    <!-- /.direct-chat-info -->
-                                    <img class="direct-chat-img" src="/adminlte/img/user1-128x128.jpg" alt="message user image">
+                                    <!-- /.direct-chat-infos -->
+                                    <img class="direct-chat-img" src="~/_content/AdminLteTheme.AspNetCore/dist/img/user1-128x128.jpg" alt="message user image">
                                     <!-- /.direct-chat-img -->
                                     <div class="direct-chat-text">
                                         Working with AdminLTE on a great new app! Wanna join?
@@ -325,12 +322,12 @@
                                 <!-- /.direct-chat-msg -->
                                 <!-- Message to the right -->
                                 <div class="direct-chat-msg right">
-                                    <div class="direct-chat-info clearfix">
+                                    <div class="direct-chat-infos clearfix">
                                         <span class="direct-chat-name float-right">Sarah Bullock</span>
                                         <span class="direct-chat-timestamp float-left">23 Jan 6:10 pm</span>
                                     </div>
-                                    <!-- /.direct-chat-info -->
-                                    <img class="direct-chat-img" src="/adminlte/img/user3-128x128.jpg" alt="message user image">
+                                    <!-- /.direct-chat-infos -->
+                                    <img class="direct-chat-img" src="~/_content/AdminLteTheme.AspNetCore/dist/img/user3-128x128.jpg" alt="message user image">
                                     <!-- /.direct-chat-img -->
                                     <div class="direct-chat-text">
                                         I would love to.
@@ -346,7 +343,7 @@
                                 <ul class="contacts-list">
                                     <li>
                                         <a href="#">
-                                            <img class="contacts-list-img" src="/adminlte/img/user1-128x128.jpg">
+                                            <img class="contacts-list-img" src="~/_content/AdminLteTheme.AspNetCore/dist/img/user1-128x128.jpg" alt="User Avatar">
 
                                             <div class="contacts-list-info">
                                                 <span class="contacts-list-name">
@@ -361,7 +358,7 @@
                                     <!-- End Contact Item -->
                                     <li>
                                         <a href="#">
-                                            <img class="contacts-list-img" src="/adminlte/img/user7-128x128.jpg">
+                                            <img class="contacts-list-img" src="~/_content/AdminLteTheme.AspNetCore/dist/img/user7-128x128.jpg" alt="User Avatar">
 
                                             <div class="contacts-list-info">
                                                 <span class="contacts-list-name">
@@ -376,7 +373,7 @@
                                     <!-- End Contact Item -->
                                     <li>
                                         <a href="#">
-                                            <img class="contacts-list-img" src="/adminlte/img/user3-128x128.jpg">
+                                            <img class="contacts-list-img" src="~/_content/AdminLteTheme.AspNetCore/dist/img/user3-128x128.jpg" alt="User Avatar">
 
                                             <div class="contacts-list-info">
                                                 <span class="contacts-list-name">
@@ -391,7 +388,7 @@
                                     <!-- End Contact Item -->
                                     <li>
                                         <a href="#">
-                                            <img class="contacts-list-img" src="/adminlte/img/user5-128x128.jpg">
+                                            <img class="contacts-list-img" src="~/_content/AdminLteTheme.AspNetCore/dist/img/user5-128x128.jpg" alt="User Avatar">
 
                                             <div class="contacts-list-info">
                                                 <span class="contacts-list-name">
@@ -406,7 +403,7 @@
                                     <!-- End Contact Item -->
                                     <li>
                                         <a href="#">
-                                            <img class="contacts-list-img" src="/adminlte/img/user6-128x128.jpg">
+                                            <img class="contacts-list-img" src="~/_content/AdminLteTheme.AspNetCore/dist/img/user6-128x128.jpg" alt="User Avatar">
 
                                             <div class="contacts-list-info">
                                                 <span class="contacts-list-name">
@@ -421,7 +418,7 @@
                                     <!-- End Contact Item -->
                                     <li>
                                         <a href="#">
-                                            <img class="contacts-list-img" src="/adminlte/img/user8-128x128.jpg">
+                                            <img class="contacts-list-img" src="~/_content/AdminLteTheme.AspNetCore/dist/img/user8-128x128.jpg" alt="User Avatar">
 
                                             <div class="contacts-list-info">
                                                 <span class="contacts-list-name">
@@ -464,11 +461,11 @@
 
                             <div class="card-tools">
                                 <span class="badge badge-danger">8 New Members</span>
-                                <button type="button" class="btn btn-tool" data-widget="collapse">
-                                    <i class="fa fa-minus"></i>
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
                                 </button>
-                                <button type="button" class="btn btn-tool" data-widget="remove">
-                                    <i class="fa fa-times"></i>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
                                 </button>
                             </div>
                         </div>
@@ -476,42 +473,42 @@
                         <div class="card-body p-0">
                             <ul class="users-list clearfix">
                                 <li>
-                                    <img src="/adminlte/img/user1-128x128.jpg" alt="User Image">
+                                    <img src="~/_content/AdminLteTheme.AspNetCore/dist/img/user1-128x128.jpg" alt="User Image">
                                     <a class="users-list-name" href="#">Alexander Pierce</a>
                                     <span class="users-list-date">Today</span>
                                 </li>
                                 <li>
-                                    <img src="/adminlte/img/user8-128x128.jpg" alt="User Image">
+                                    <img src="~/_content/AdminLteTheme.AspNetCore/dist/img/user8-128x128.jpg" alt="User Image">
                                     <a class="users-list-name" href="#">Norman</a>
                                     <span class="users-list-date">Yesterday</span>
                                 </li>
                                 <li>
-                                    <img src="/adminlte/img/user7-128x128.jpg" alt="User Image">
+                                    <img src="~/_content/AdminLteTheme.AspNetCore/dist/img/user7-128x128.jpg" alt="User Image">
                                     <a class="users-list-name" href="#">Jane</a>
                                     <span class="users-list-date">12 Jan</span>
                                 </li>
                                 <li>
-                                    <img src="/adminlte/img/user6-128x128.jpg" alt="User Image">
+                                    <img src="~/_content/AdminLteTheme.AspNetCore/dist/img/user6-128x128.jpg" alt="User Image">
                                     <a class="users-list-name" href="#">John</a>
                                     <span class="users-list-date">12 Jan</span>
                                 </li>
                                 <li>
-                                    <img src="/adminlte/img/user2-160x160.jpg" alt="User Image">
+                                    <img src="~/_content/AdminLteTheme.AspNetCore/dist/img/user2-160x160.jpg" alt="User Image">
                                     <a class="users-list-name" href="#">Alexander</a>
                                     <span class="users-list-date">13 Jan</span>
                                 </li>
                                 <li>
-                                    <img src="/adminlte/img/user5-128x128.jpg" alt="User Image">
+                                    <img src="~/_content/AdminLteTheme.AspNetCore/dist/img/user5-128x128.jpg" alt="User Image">
                                     <a class="users-list-name" href="#">Sarah</a>
                                     <span class="users-list-date">14 Jan</span>
                                 </li>
                                 <li>
-                                    <img src="/adminlte/img/user4-128x128.jpg" alt="User Image">
+                                    <img src="~/_content/AdminLteTheme.AspNetCore/dist/img/user4-128x128.jpg" alt="User Image">
                                     <a class="users-list-name" href="#">Nora</a>
                                     <span class="users-list-date">15 Jan</span>
                                 </li>
                                 <li>
-                                    <img src="/adminlte/img/user3-128x128.jpg" alt="User Image">
+                                    <img src="~/_content/AdminLteTheme.AspNetCore/dist/img/user3-128x128.jpg" alt="User Image">
                                     <a class="users-list-name" href="#">Nadia</a>
                                     <span class="users-list-date">15 Jan</span>
                                 </li>
@@ -520,7 +517,7 @@
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer text-center">
-                            <a href="javascript::">View All Users</a>
+                            <a href="javascript:">View All Users</a>
                         </div>
                         <!-- /.card-footer -->
                     </div>
@@ -535,11 +532,11 @@
                     <h3 class="card-title">Latest Orders</h3>
 
                     <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
                         </button>
-                        <button type="button" class="btn btn-tool" data-widget="remove">
-                            <i class="fa fa-times"></i>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
                         </button>
                     </div>
                 </div>
@@ -557,7 +554,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><a href="pages/examples/invoice.html">OR9842</a></td>
+                                    <td><a href="~/_content/AdminLteTheme.AspNetCore/pages/examples/invoice.html">OR9842</a></td>
                                     <td>Call of Duty IV</td>
                                     <td><span class="badge badge-success">Shipped</span></td>
                                     <td>
@@ -565,7 +562,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><a href="pages/examples/invoice.html">OR1848</a></td>
+                                    <td><a href="~/_content/AdminLteTheme.AspNetCore/pages/examples/invoice.html">OR1848</a></td>
                                     <td>Samsung Smart TV</td>
                                     <td><span class="badge badge-warning">Pending</span></td>
                                     <td>
@@ -573,7 +570,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                                    <td><a href="~/_content/AdminLteTheme.AspNetCore/pages/examples/invoice.html">OR7429</a></td>
                                     <td>iPhone 6 Plus</td>
                                     <td><span class="badge badge-danger">Delivered</span></td>
                                     <td>
@@ -581,7 +578,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                                    <td><a href="~/_content/AdminLteTheme.AspNetCore/pages/examples/invoice.html">OR7429</a></td>
                                     <td>Samsung Smart TV</td>
                                     <td><span class="badge badge-info">Processing</span></td>
                                     <td>
@@ -589,7 +586,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><a href="pages/examples/invoice.html">OR1848</a></td>
+                                    <td><a href="~/_content/AdminLteTheme.AspNetCore/pages/examples/invoice.html">OR1848</a></td>
                                     <td>Samsung Smart TV</td>
                                     <td><span class="badge badge-warning">Pending</span></td>
                                     <td>
@@ -597,7 +594,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><a href="pages/examples/invoice.html">OR7429</a></td>
+                                    <td><a href="~/_content/AdminLteTheme.AspNetCore/pages/examples/invoice.html">OR7429</a></td>
                                     <td>iPhone 6 Plus</td>
                                     <td><span class="badge badge-danger">Delivered</span></td>
                                     <td>
@@ -605,7 +602,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td><a href="pages/examples/invoice.html">OR9842</a></td>
+                                    <td><a href="~/_content/AdminLteTheme.AspNetCore/pages/examples/invoice.html">OR9842</a></td>
                                     <td>Call of Duty IV</td>
                                     <td><span class="badge badge-success">Shipped</span></td>
                                     <td>
@@ -631,7 +628,7 @@
         <div class="col-md-4">
             <!-- Info Boxes Style 2 -->
             <div class="info-box mb-3 bg-warning">
-                <span class="info-box-icon"><i class="fa fa-tag"></i></span>
+                <span class="info-box-icon"><i class="fas fa-tag"></i></span>
 
                 <div class="info-box-content">
                     <span class="info-box-text">Inventory</span>
@@ -641,7 +638,7 @@
             </div>
             <!-- /.info-box -->
             <div class="info-box mb-3 bg-success">
-                <span class="info-box-icon"><i class="fa fa-heart-o"></i></span>
+                <span class="info-box-icon"><i class="far fa-heart"></i></span>
 
                 <div class="info-box-content">
                     <span class="info-box-text">Mentions</span>
@@ -651,7 +648,7 @@
             </div>
             <!-- /.info-box -->
             <div class="info-box mb-3 bg-danger">
-                <span class="info-box-icon"><i class="fa fa-cloud-download"></i></span>
+                <span class="info-box-icon"><i class="fas fa-cloud-download-alt"></i></span>
 
                 <div class="info-box-content">
                     <span class="info-box-text">Downloads</span>
@@ -661,7 +658,7 @@
             </div>
             <!-- /.info-box -->
             <div class="info-box mb-3 bg-info">
-                <span class="info-box-icon"><i class="fa fa-comment-o"></i></span>
+                <span class="info-box-icon"><i class="far fa-comment"></i></span>
 
                 <div class="info-box-content">
                     <span class="info-box-text">Direct Messages</span>
@@ -676,11 +673,11 @@
                     <h3 class="card-title">Browser Usage</h3>
 
                     <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
                         </button>
-                        <button type="button" class="btn btn-tool" data-widget="remove">
-                            <i class="fa fa-times"></i>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
                         </button>
                     </div>
                 </div>
@@ -696,12 +693,12 @@
                         <!-- /.col -->
                         <div class="col-md-4">
                             <ul class="chart-legend clearfix">
-                                <li><i class="fa fa-circle-o text-danger"></i> Chrome</li>
-                                <li><i class="fa fa-circle-o text-success"></i> IE</li>
-                                <li><i class="fa fa-circle-o text-warning"></i> FireFox</li>
-                                <li><i class="fa fa-circle-o text-info"></i> Safari</li>
-                                <li><i class="fa fa-circle-o text-primary"></i> Opera</li>
-                                <li><i class="fa fa-circle-o text-secondary"></i> Navigator</li>
+                                <li><i class="far fa-circle text-danger"></i> Chrome</li>
+                                <li><i class="far fa-circle text-success"></i> IE</li>
+                                <li><i class="far fa-circle text-warning"></i> FireFox</li>
+                                <li><i class="far fa-circle text-info"></i> Safari</li>
+                                <li><i class="far fa-circle text-primary"></i> Opera</li>
+                                <li><i class="far fa-circle text-secondary"></i> Navigator</li>
                             </ul>
                         </div>
                         <!-- /.col -->
@@ -709,13 +706,13 @@
                     <!-- /.row -->
                 </div>
                 <!-- /.card-body -->
-                <div class="card-footer bg-white p-0">
+                <div class="card-footer bg-light p-0">
                     <ul class="nav nav-pills flex-column">
                         <li class="nav-item">
                             <a href="#" class="nav-link">
                                 United States of America
                                 <span class="float-right text-danger">
-                                    <i class="fa fa-arrow-down text-sm"></i>
+                                    <i class="fas fa-arrow-down text-sm"></i>
                                     12%
                                 </span>
                             </a>
@@ -724,7 +721,7 @@
                             <a href="#" class="nav-link">
                                 India
                                 <span class="float-right text-success">
-                                    <i class="fa fa-arrow-up text-sm"></i> 4%
+                                    <i class="fas fa-arrow-up text-sm"></i> 4%
                                 </span>
                             </a>
                         </li>
@@ -732,7 +729,7 @@
                             <a href="#" class="nav-link">
                                 China
                                 <span class="float-right text-warning">
-                                    <i class="fa fa-arrow-left text-sm"></i> 0%
+                                    <i class="fas fa-arrow-left text-sm"></i> 0%
                                 </span>
                             </a>
                         </li>
@@ -747,11 +744,11 @@
                     <h3 class="card-title">Recently Added Products</h3>
 
                     <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-widget="collapse">
-                            <i class="fa fa-minus"></i>
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fas fa-minus"></i>
                         </button>
-                        <button type="button" class="btn btn-tool" data-widget="remove">
-                            <i class="fa fa-times"></i>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove">
+                            <i class="fas fa-times"></i>
                         </button>
                     </div>
                 </div>
@@ -760,7 +757,7 @@
                     <ul class="products-list product-list-in-card pl-2 pr-2">
                         <li class="item">
                             <div class="product-img">
-                                <img src="/adminlte/img/default-150x150.png" alt="Product Image" class="img-size-50">
+                                <img src="~/_content/AdminLteTheme.AspNetCore/dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
                             </div>
                             <div class="product-info">
                                 <a href="javascript:void(0)" class="product-title">
@@ -775,7 +772,7 @@
                         <!-- /.item -->
                         <li class="item">
                             <div class="product-img">
-                                <img src="/adminlte/img/default-150x150.png" alt="Product Image" class="img-size-50">
+                                <img src="~/_content/AdminLteTheme.AspNetCore/dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
                             </div>
                             <div class="product-info">
                                 <a href="javascript:void(0)" class="product-title">
@@ -790,7 +787,7 @@
                         <!-- /.item -->
                         <li class="item">
                             <div class="product-img">
-                                <img src="/adminlte/img/default-150x150.png" alt="Product Image" class="img-size-50">
+                                <img src="~/_content/AdminLteTheme.AspNetCore/dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
                             </div>
                             <div class="product-info">
                                 <a href="javascript:void(0)" class="product-title">
@@ -806,7 +803,7 @@
                         <!-- /.item -->
                         <li class="item">
                             <div class="product-img">
-                                <img src="/adminlte/img/default-150x150.png" alt="Product Image" class="img-size-50">
+                                <img src="~/_content/AdminLteTheme.AspNetCore/dist/img/default-150x150.png" alt="Product Image" class="img-size-50">
                             </div>
                             <div class="product-info">
                                 <a href="javascript:void(0)" class="product-title">
@@ -832,4 +829,18 @@
         <!-- /.col -->
     </div>
     <!-- /.row -->
-</div><!--/. container-fluid -->
+
+
+
+@section Scripts{
+    @{
+
+        <!-- jQuery Mapael -->
+<script src="~/_content/AdminLteTheme.AspNetCore/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
+<script src="~/_content/AdminLteTheme.AspNetCore/plugins/raphael/raphael.min.js"></script>
+<script src="~/_content/AdminLteTheme.AspNetCore/plugins/jquery-mapael/jquery.mapael.min.js"></script>
+<script src="~/_content/AdminLteTheme.AspNetCore/plugins/jquery-mapael/maps/usa_states.min.js"></script>
+      //  <script type="text/javascript" src='~/_content/AdminLteTheme.AspNetCore/plugins/chartjs-old/Chart.min.js'></script>
+        <script type="text/javascript" src='~/_content/AdminLteTheme.AspNetCore/dist/js/pages/dashboard2.js'></script>
+    }
+}

@@ -20,6 +20,7 @@ using Microsoft.Extensions.DependencyInjection;
 using EntitySignal.Extensions;
 using EntitySignal.Hubs;
 using Microsoft.Extensions.Hosting;
+
 namespace TestCrud
 {
     public class Startup
@@ -55,17 +56,21 @@ namespace TestCrud
 
             services.AddScoped<IDataApiService, DataApiService>();
 
+            services.AddRazorPages()
+    .AddViewOptions(options =>
+    {
+        options.HtmlHelperOptions.ClientValidationEnabled = true;
+    });
+
             services.AddAutoMapper(options => options.AddProfile<MappingProfileApi>(), typeof(Startup));
 
             services.AddSignalR()
-                .AddNewtonsoftJsonProtocol(options =>
-                {
+                .AddNewtonsoftJsonProtocol(options => {
                     options.PayloadSerializerSettings.ContractResolver =
                     new DefaultContractResolver();
                 })
                 ;
             services.AddEntitySignal();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -86,8 +91,8 @@ namespace TestCrud
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
             app.UseRouting();
+
 
             app.UseAuthentication();
             app.UseAuthorization();

@@ -219,18 +219,404 @@ namespace TestCrud.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("TestCrud.Models.Client", b =>
+            modelBuilder.Entity("TestCrud.Models.AdresseNew", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("newid()");
 
-                    b.Property<string>("Nom")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("AdresseTexte")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("CodePostal")
+                        .HasColumnType("nvarchar(6)")
+                        .HasMaxLength(6);
+
+                    b.Property<string>("Complement")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Departement")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("NomDepartement")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("NomPays")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("NomRegion")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("NomVille")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Pays")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("Region")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("Ville")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
 
                     b.HasKey("Id");
 
-                    b.ToTable("Client");
+                    b.ToTable("Adresse_New");
+                });
+
+            modelBuilder.Entity("TestCrud.Models.CategorieVehiculeNew", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("newid()");
+
+                    b.Property<string>("Categorie")
+                        .HasColumnType("varchar(3)")
+                        .HasMaxLength(3)
+                        .IsUnicode(false);
+
+                    b.Property<DateTime?>("DateCreation")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("DateSaisie")
+                        .HasColumnName("Date_Saisie")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Libelle")
+                        .HasColumnType("varchar(40)")
+                        .HasMaxLength(40)
+                        .IsUnicode(false);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CategorieVehicule_New");
+                });
+
+            modelBuilder.Entity("TestCrud.Models.ChauffeurNew", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("newid()");
+
+                    b.Property<string>("Abrege")
+                        .HasColumnType("nvarchar(12)")
+                        .HasMaxLength(12);
+
+                    b.Property<Guid?>("AdresseChuteId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("AdresseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DateCreation")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("DateSaisie")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("DateSortie")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Email")
+                        .HasColumnName("EMail")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<short?>("NbHeures")
+                        .HasColumnName("nbHeures")
+                        .HasColumnType("smallint");
+
+                    b.Property<string>("Nom")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Operateur")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<DateTime?>("Permis")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Portable")
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<string>("Prenom")
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<Guid?>("RemorqueId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Telephone")
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<string>("Telephone2")
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<int?>("Tiers")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("TypePlanningId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("VehiculeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdresseChuteId");
+
+                    b.HasIndex("AdresseId");
+
+                    b.HasIndex("RemorqueId");
+
+                    b.HasIndex("TypePlanningId");
+
+                    b.HasIndex("VehiculeId");
+
+                    b.ToTable("Chauffeur_New");
+                });
+
+            modelBuilder.Entity("TestCrud.Models.TypePlanningNew", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("newid()");
+
+                    b.Property<string>("ActiviteAnalytique")
+                        .HasColumnType("varchar(2)")
+                        .HasMaxLength(2)
+                        .IsUnicode(false);
+
+                    b.Property<bool>("GenereDemandePrix")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Libelle")
+                        .HasColumnType("varchar(30)")
+                        .HasMaxLength(30)
+                        .IsUnicode(false);
+
+                    b.Property<string>("TypePlanningTexte")
+                        .HasColumnName("TypePlanning")
+                        .HasColumnType("varchar(3)")
+                        .HasMaxLength(3)
+                        .IsUnicode(false);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TypePlanning_New");
+                });
+
+            modelBuilder.Entity("TestCrud.Models.TypeVehiculeNew", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("newid()");
+
+                    b.Property<double?>("Autoroute")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("Camion")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("DateCreation")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("DateSaisie")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Libelle")
+                        .HasColumnType("varchar(40)")
+                        .HasMaxLength(40)
+                        .IsUnicode(false);
+
+                    b.Property<bool>("Remorque")
+                        .HasColumnType("bit");
+
+                    b.Property<double?>("Route")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("RouteSec")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("SousTraitant")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("Tracteur")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("TypeVehiculeTexte")
+                        .HasColumnName("TypeVehicule")
+                        .HasColumnType("varchar(3)")
+                        .HasMaxLength(3)
+                        .IsUnicode(false);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TypeVehicule_New");
+                });
+
+            modelBuilder.Entity("TestCrud.Models.VehiculeNew", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasDefaultValueSql("newid()");
+
+                    b.Property<DateTime?>("Acquisition")
+                        .HasColumnType("datetime");
+
+                    b.Property<Guid?>("AdresseId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<double?>("Autoroute")
+                        .HasColumnType("float");
+
+                    b.Property<bool>("Cabotage")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Carrosserie")
+                        .HasColumnType("nvarchar(25)")
+                        .HasMaxLength(25);
+
+                    b.Property<Guid?>("CategorieVehiculeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DateCreation")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("DateSaisie")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("DateSortie")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("DebutCabotage")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Genre")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<float?>("Hauteur")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Immatriculation")
+                        .HasColumnType("nvarchar(11)")
+                        .HasMaxLength(11);
+
+                    b.Property<float?>("Largeur")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Libelle")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<float?>("Longueur")
+                        .HasColumnType("real");
+
+                    b.Property<string>("Marque")
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<float?>("MetrageLineaire")
+                        .HasColumnType("real");
+
+                    b.Property<DateTime?>("MiseEnService")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("NoCg")
+                        .HasColumnName("NoCG")
+                        .HasColumnType("nvarchar(11)")
+                        .HasMaxLength(11);
+
+                    b.Property<string>("NoSerie")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<short?>("Palette")
+                        .HasColumnType("smallint");
+
+                    b.Property<string>("PaysOrigine")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(3)")
+                        .HasMaxLength(3);
+
+                    b.Property<float?>("Poids")
+                        .HasColumnType("real");
+
+                    b.Property<double?>("PoidsVide")
+                        .HasColumnType("float");
+
+                    b.Property<float?>("Ptac")
+                        .HasColumnName("PTAC")
+                        .HasColumnType("real");
+
+                    b.Property<double?>("Route")
+                        .HasColumnType("float");
+
+                    b.Property<double?>("RouteSec")
+                        .HasColumnType("float");
+
+                    b.Property<int?>("Tiers")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TypeCg")
+                        .HasColumnName("TypeCG")
+                        .HasColumnType("nvarchar(15)")
+                        .HasMaxLength(15);
+
+                    b.Property<Guid?>("TypePlanningId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("TypeVehiculeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("VehiculeTexte")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(9)")
+                        .HasMaxLength(9);
+
+                    b.Property<float?>("Volume")
+                        .HasColumnType("real");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdresseId");
+
+                    b.HasIndex("CategorieVehiculeId");
+
+                    b.HasIndex("TypePlanningId");
+
+                    b.HasIndex("TypeVehiculeId");
+
+                    b.ToTable("Vehicule_New");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -282,6 +668,48 @@ namespace TestCrud.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("TestCrud.Models.ChauffeurNew", b =>
+                {
+                    b.HasOne("TestCrud.Models.AdresseNew", "AdresseChute")
+                        .WithMany("ChauffeurNewAdresseChute")
+                        .HasForeignKey("AdresseChuteId");
+
+                    b.HasOne("TestCrud.Models.AdresseNew", "Adresse")
+                        .WithMany("ChauffeurNewAdresse")
+                        .HasForeignKey("AdresseId");
+
+                    b.HasOne("TestCrud.Models.VehiculeNew", "Remorque")
+                        .WithMany("ChauffeurNewRemorque")
+                        .HasForeignKey("RemorqueId");
+
+                    b.HasOne("TestCrud.Models.TypePlanningNew", "TypePlanning")
+                        .WithMany("ChauffeurNewTypePlanning")
+                        .HasForeignKey("TypePlanningId");
+
+                    b.HasOne("TestCrud.Models.VehiculeNew", "Vehicule")
+                        .WithMany("ChauffeurNewVehicule")
+                        .HasForeignKey("VehiculeId");
+                });
+
+            modelBuilder.Entity("TestCrud.Models.VehiculeNew", b =>
+                {
+                    b.HasOne("TestCrud.Models.AdresseNew", "Adresse")
+                        .WithMany("VehiculeNew")
+                        .HasForeignKey("AdresseId");
+
+                    b.HasOne("TestCrud.Models.CategorieVehiculeNew", "CategorieVehicule")
+                        .WithMany("VehiculeNewCategorieVehicule")
+                        .HasForeignKey("CategorieVehiculeId");
+
+                    b.HasOne("TestCrud.Models.TypePlanningNew", "TypePlanning")
+                        .WithMany("VehiculeNewTypePlanning")
+                        .HasForeignKey("TypePlanningId");
+
+                    b.HasOne("TestCrud.Models.TypeVehiculeNew", "TypeVehicule")
+                        .WithMany("VehiculeNewTypeVehicule")
+                        .HasForeignKey("TypeVehiculeId");
                 });
 #pragma warning restore 612, 618
         }

@@ -77,7 +77,7 @@ var EntitySignal;
                     callback(newStatus);
                 });
             },
-            enumerable: true,
+            enumerable: false,
             configurable: true
         });
         Client.prototype.onDataChange = function (url, callback) {

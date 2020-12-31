@@ -1,5 +1,5 @@
 ﻿.options-panel li {
-    background: url("/plugins/slickgrid/images/arrow_right_spearmint.png") no-repeat center left;
+    background: url("/_content/AdminLteTheme.AspNetCore/plugins/slickgrid/images/arrow_right_spearmint.png") no-repeat center left;
     padding: 0 0 0 14px;
     list-style: none;
     margin: 0;
@@ -15,7 +15,7 @@
     border: 1px solid gray;
     border-bottom: 0;
     border-top: 0;
-    background: url('/plugins/slickgrid/images/header-bg.gif') repeat-x center top;
+    background: url('/_content/AdminLteTheme.AspNetCore/plugins/slickgrid/images/header-bg.gif') repeat-x center top;
     color: black;
     height: 24px;
     line-height: 24px;
@@ -112,7 +112,7 @@ input.editor-text {
 }
 
 .ui-datepicker-trigger {
-    background: url("/plugins/slickgrid/images/calendar.gif") top left no-repeat;
+    background: url("/_content/AdminLteTheme.AspNetCore/plugins/slickgrid/images/calendar.gif") top left no-repeat;
     width: 16px;
     height: 16px;
     margin-top: 2px;
@@ -137,7 +137,7 @@ input.editor-percentcomplete {
     display: inline-block;
     width: 16px;
     height: 100%;
-    background: url("/plugins/slickgrid/images/pencil.gif") no-repeat center center;
+    background: url("/_content/AdminLteTheme.AspNetCore/plugins/slickgrid/images/pencil.gif") no-repeat center center;
     overflow: visible;
     z-index: 1000;
     float: right;
@@ -148,7 +148,7 @@ input.editor-percentcomplete {
     position: absolute;
     top: -2px;
     left: -9px;
-    background: url("/plugins/slickgrid/images/editor-helper-bg.gif") no-repeat top left;
+    background: url("/_content/AdminLteTheme.AspNetCore/plugins/slickgrid/images/editor-helper-bg.gif") no-repeat top left;
     padding-left: 9px;
     width: 120px;
     height: 140px;
@@ -220,7 +220,7 @@ input.editor-checkbox {
         padding: 4px 4px 4px 14px;
         list-style: none;
         cursor: pointer;
-        background: url("/plugins/slickgrid/images/arrow_right_peppermint.png") no-repeat center left;
+        background: url("/_content/AdminLteTheme.AspNetCore/plugins/slickgrid/images/arrow_right_peppermint.png") no-repeat center left;
     }
 
         .gridContextMenu li:hover {

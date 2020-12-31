@@ -9456,8 +9456,8 @@ $(function () {
 			}
 		}
 
-		return index;
 	}
+		return index;
 
 	function _matches(/**HTMLElement*/el, /**String*/selector) {
 		if (el) {

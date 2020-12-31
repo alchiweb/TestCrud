@@ -1,0 +1,358 @@
+﻿@model TestCrud.Models.VehiculeNew
+
+@{
+    ViewData["Title"] = "Fiche VehiculeNew";
+    var newLocalId = Guid.NewGuid();
+    var modelTypeName = ViewData.ModelMetadata.ModelType.Name;
+    var hideLayout = ViewBag.Layout is bool bLayout && bLayout == false;
+    string errorMessage = ViewBag.ErrorMessage;
+    if (hideLayout)
+    {
+        Layout = null;
+    }
+    else
+    {
+        @section CssStyle{
+            @{
+                //await Html.RenderPartialAsync("_SlickGridStylePartial");        // pour la grille
+            }
+        }
+        @section Scripts{
+            @{
+                //await Html.RenderPartialAsync("_SlickGridScriptsPartial");        // pour la grille
+                await Html.RenderPartialAsync("_CrudScriptsPartial");             // pour les fenêtres de dialog du CRUD
+                await Html.RenderPartialAsync("_SpaEntitySignalScriptsPartial");  // pour les mises à jour instantanées de la page
+                <script type='text/javascript'>
+                    $(function () {
+                        InitCrud('@(ViewContext.RouteData.Values["controller"])');
+                    });
+                </script>
+            }
+        }
+    }
+}
+@if (!hideLayout)
+{
+    @Html.Raw($"<h1>{ViewData["Title"]}</h1><div class='card'><div class='card-header'><h3 class='card-title'></h3></div><div class='card-body'><div class='flex-layout s-Panel' id='crudPrincipal'>");
+    }
+    <div id="@(newLocalId)_DialogContent" class="s-DialogContent ui-tabs ui-corner-all ui-widget ui-widget-content">
+    <ul role="tablist" class="ui-tabs-nav ui-corner-all ui-helper-reset ui-helper-clearfix ui-widget-header">
+        <li role="tab" tabindex="0" class="ui-tabs-tab ui-corner-top ui-state-default ui-tab ui-tabs-active ui-state-active" aria-controls="@(newLocalId)_Tab1" aria-labelledby="@(newLocalId)_Principal" aria-selected="true" aria-expanded="true"><a href="#" role="presentation" tabindex="-1" class="ui-tabs-anchor" id="@(newLocalId)_Principal"><span>Principal</span></a></li>
+    </ul>
+    <div id="@(newLocalId)_Tab1" class="tab-pane ui-tabs-panel ui-corner-bottom ui-widget-content" aria-labelledby="@(newLocalId)_Principal" role="tabpanel" aria-hidden="false" style="">
+    <div class="s-Form">
+            <form asp-action="Delete" asp-route-layout="@(!hideLayout)" data-ajax="@(hideLayout.ToString().ToLower())" data-ajax-success="AjaxFormSuccess" data-ajax-failure="AjaxFormFailure">
+    <div class="ajax-error-text text-danger" style="@(String.IsNullOrWhiteSpace(errorMessage) ? "display:none" : "")">@errorMessage</div>
+    <div id="@(newLocalId)_Tab1_Toolbar" class="s-DialogToolbar s-Toolbar clearfix">
+    <div class="tool-buttons">
+    <div class="buttons-outer">
+    <div class="buttons-inner">
+    <div class="tool-button delete-button">
+    <div class="button-outer"><span class="button-inner">Supprimer</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+    <div class="fieldset" data-entity="@modelTypeName" data-id="@Model.Id" data-action="Delete">
+    <div class="s-PropertyGrid">
+    <div class="category-links">
+    <a class="category-link" tabindex="-1" href="#">Infos principales</a>
+    <div class="clear"></div>
+</div>
+    <div class="categories">
+    <div class="category">
+    <div class="category-title">
+    <a class="category-anchor" name="@(newLocalId)_Tab1_Cat1">Infos principales</a>
+</div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.Immatriculation)
+                    </label>
+                    <div name='Immatriculation'>
+                        @Html.DisplayFor(model => model.Immatriculation)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.VehiculeTexte)
+                    </label>
+                    <div name='VehiculeTexte'>
+                        @Html.DisplayFor(model => model.VehiculeTexte)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.Libelle)
+                    </label>
+                    <div name='Libelle'>
+                        @Html.DisplayFor(model => model.Libelle)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.Autoroute)
+                    </label>
+                    <div name='Autoroute'>
+                        @Html.DisplayFor(model => model.Autoroute)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.Route)
+                    </label>
+                    <div name='Route'>
+                        @Html.DisplayFor(model => model.Route)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.RouteSec)
+                    </label>
+                    <div name='RouteSec'>
+                        @Html.DisplayFor(model => model.RouteSec)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.Tiers)
+                    </label>
+                    <div name='Tiers'>
+                        @Html.DisplayFor(model => model.Tiers)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.Marque)
+                    </label>
+                    <div name='Marque'>
+                        @Html.DisplayFor(model => model.Marque)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.MiseEnService)
+                    </label>
+                    <div name='MiseEnService'>
+                        @Html.DisplayFor(model => model.MiseEnService)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.Acquisition)
+                    </label>
+                    <div name='Acquisition'>
+                        @Html.DisplayFor(model => model.Acquisition)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.NoCg)
+                    </label>
+                    <div name='NoCg'>
+                        @Html.DisplayFor(model => model.NoCg)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.Genre)
+                    </label>
+                    <div name='Genre'>
+                        @Html.DisplayFor(model => model.Genre)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.TypeCg)
+                    </label>
+                    <div name='TypeCg'>
+                        @Html.DisplayFor(model => model.TypeCg)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.NoSerie)
+                    </label>
+                    <div name='NoSerie'>
+                        @Html.DisplayFor(model => model.NoSerie)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.Carrosserie)
+                    </label>
+                    <div name='Carrosserie'>
+                        @Html.DisplayFor(model => model.Carrosserie)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.Notes)
+                    </label>
+                    <div name='Notes'>
+                        @Html.DisplayFor(model => model.Notes)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.PoidsVide)
+                    </label>
+                    <div name='PoidsVide'>
+                        @Html.DisplayFor(model => model.PoidsVide)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.Palette)
+                    </label>
+                    <div name='Palette'>
+                        @Html.DisplayFor(model => model.Palette)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.Poids)
+                    </label>
+                    <div name='Poids'>
+                        @Html.DisplayFor(model => model.Poids)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.MetrageLineaire)
+                    </label>
+                    <div name='MetrageLineaire'>
+                        @Html.DisplayFor(model => model.MetrageLineaire)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.Volume)
+                    </label>
+                    <div name='Volume'>
+                        @Html.DisplayFor(model => model.Volume)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.Longueur)
+                    </label>
+                    <div name='Longueur'>
+                        @Html.DisplayFor(model => model.Longueur)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.Largeur)
+                    </label>
+                    <div name='Largeur'>
+                        @Html.DisplayFor(model => model.Largeur)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.Hauteur)
+                    </label>
+                    <div name='Hauteur'>
+                        @Html.DisplayFor(model => model.Hauteur)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.Ptac)
+                    </label>
+                    <div name='Ptac'>
+                        @Html.DisplayFor(model => model.Ptac)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.DateSortie)
+                    </label>
+                    <div name='DateSortie'>
+                        @Html.DisplayFor(model => model.DateSortie)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.PaysOrigine)
+                    </label>
+                    <div name='PaysOrigine'>
+                        @Html.DisplayFor(model => model.PaysOrigine)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.Cabotage)
+                    </label>
+                    <div name='Cabotage'>
+                        @Html.DisplayFor(model => model.Cabotage)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.DebutCabotage)
+                    </label>
+                    <div name='DebutCabotage'>
+                        @Html.DisplayFor(model => model.DebutCabotage)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.DateCreation)
+                    </label>
+                    <div name='DateCreation'>
+                        @Html.DisplayFor(model => model.DateCreation)
+                    </div>
+                </div>
+                <div class="field">
+                    <label class="caption">
+                        @Html.DisplayNameFor(model => model.DateSaisie)
+                    </label>
+                    <div name='DateSaisie'>
+                        @Html.DisplayFor(model => model.DateSaisie)
+                    </div>
+                </div>
+      <div class="field">
+          <label class="caption">
+              @Html.DisplayNameFor(model => model.TypePlanning)
+          </label>
+          <div name='TypePlanningId' data-entity="TypePlanningNew" data-id="@Model.TypePlanningId">
+              @Html.DisplayFor(model => ((ModelBase)model.TypePlanning).DisplayValue)
+          </div>
+      </div>
+      <div class="field">
+          <label class="caption">
+              @Html.DisplayNameFor(model => model.TypeVehicule)
+          </label>
+          <div name='TypeVehiculeId' data-entity="TypeVehiculeNew" data-id="@Model.TypeVehiculeId">
+              @Html.DisplayFor(model => ((ModelBase)model.TypeVehicule).DisplayValue)
+          </div>
+      </div>
+      <div class="field">
+          <label class="caption">
+              @Html.DisplayNameFor(model => model.CategorieVehicule)
+          </label>
+          <div name='CategorieVehiculeId' data-entity="CategorieVehiculeNew" data-id="@Model.CategorieVehiculeId">
+              @Html.DisplayFor(model => ((ModelBase)model.CategorieVehicule).DisplayValue)
+          </div>
+      </div>
+      <div class="field">
+          <label class="caption">
+              @Html.DisplayNameFor(model => model.Adresse)
+          </label>
+          <div name='AdresseId' data-entity="AdresseNew" data-id="@Model.AdresseId">
+              @Html.DisplayFor(model => ((ModelBase)model.Adresse).DisplayValue)
+          </div>
+      </div>
+        <input type="hidden" asp-for="Id" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

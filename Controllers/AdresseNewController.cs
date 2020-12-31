@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -17,12 +16,12 @@ using TestCrud.Models;
 namespace TestCrud.Controllers
 {
     [Authorize]
-    public class ClientController : Controller
+    public class AdresseNewController : Controller
     {
         private readonly AlchiDbContext _context;
         private EntitySignalSubscribe _entitySignalSubscribe;
 
-        public ClientController(AlchiDbContext context, EntitySignalSubscribe entitySignalSubscribe)
+        public AdresseNewController(AlchiDbContext context, EntitySignalSubscribe entitySignalSubscribe)
         {
             _context = context;
             _entitySignalSubscribe = entitySignalSubscribe;
@@ -30,19 +29,19 @@ namespace TestCrud.Controllers
 
         [HttpGet]
         [ResponseCache(NoStore = true, Duration = 0)]
-        public ActionResult<IEnumerable<Client>> SubscribeToAll()
+        public ActionResult<IEnumerable<AdresseNew>> SubscribeToAll()
         {
-            _entitySignalSubscribe.Subscribe<Client>();
-            return _context.Client.ToList();
+            _entitySignalSubscribe.Subscribe<AdresseNew>();
+            return _context.AdresseNew.ToList();
         }
 
-        // GET: Client
+        // GET: AdresseNew
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Client.ToListAsync());
+            return View(await _context.AdresseNew.ToListAsync());
         }
 
-        // GET: Client/Details/5
+        // GET: AdresseNew/Details/5
         public async Task<IActionResult> Details(Guid? id, bool layout = true)
         {
             ViewBag.Layout = layout;
@@ -52,17 +51,17 @@ namespace TestCrud.Controllers
                 return NotFound();
             }
 
-            var client = await _context.Client
+            var adresseNew = await _context.AdresseNew
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (client == null)
+            if (adresseNew == null)
             {
                 return NotFound();
             }
 
-            return View(client);
+            return View(adresseNew);
         }
 
-        // GET: Client/Create
+        // GET: AdresseNew/Create
         public IActionResult Create(bool layout = true)
         {
             ViewBag.Layout = layout;
@@ -72,21 +71,21 @@ namespace TestCrud.Controllers
             return View();
         }
 
-        // POST: Client/Create
+        // POST: AdresseNew/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nom")] Client client, bool layout = true)
+        public async Task<IActionResult> Create([Bind("Id,AdresseTexte,Complement,CodePostal,Ville,NomVille,Departement,NomDepartement,Region,NomRegion,Pays,NomPays")] AdresseNew adresseNew, bool layout = true)
         {
             ViewBag.Layout = layout;
 
             if (ModelState.IsValid)
             {
-                client.Id = Guid.NewGuid();
+                adresseNew.Id = Guid.NewGuid();
                 try
                 {
-                    _context.Add(client);
+                    _context.Add(adresseNew);
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception e)
@@ -94,7 +93,7 @@ namespace TestCrud.Controllers
                     if (layout)
                     {
                         ViewBag.ErrorMessage = e.GetMessage();
-                        return View(client);
+                        return View(adresseNew);
                     }
                     else
                     {
@@ -108,10 +107,10 @@ namespace TestCrud.Controllers
 
             
 
-            return View(client);
+            return View(adresseNew);
         }
 
-        // GET: Client/Edit/5
+        // GET: AdresseNew/Edit/5
         public async Task<IActionResult> Edit(Guid? id, bool layout = true)
         {
             ViewBag.Layout = layout;
@@ -121,27 +120,27 @@ namespace TestCrud.Controllers
                 return NotFound();
             }
 
-            var client = await _context.Client.FindAsync(id);
-            if (client == null)
+            var adresseNew = await _context.AdresseNew.FindAsync(id);
+            if (adresseNew == null)
             {
                 return NotFound();
             }
 
             
 
-            return View(client);
+            return View(adresseNew);
         }
 
-        // POST: Client/Edit/5
+        // POST: AdresseNew/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Nom")] Client client, bool layout = true)
+        public async Task<IActionResult> Edit(Guid id, [Bind("Id,AdresseTexte,Complement,CodePostal,Ville,NomVille,Departement,NomDepartement,Region,NomRegion,Pays,NomPays")] AdresseNew adresseNew, bool layout = true)
         {
             ViewBag.Layout = layout;
 
-            if (id != client.Id)
+            if (id != adresseNew.Id)
             {
                 return NotFound();
             }
@@ -150,12 +149,12 @@ namespace TestCrud.Controllers
             {
                 try
                 {
-                    _context.Update(client);
+                    _context.Update(adresseNew);
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception e)
                 {
-                    if (e is DbUpdateConcurrencyException && !ClientExists(client.Id))
+                    if (e is DbUpdateConcurrencyException && !AdresseNewExists(adresseNew.Id))
                     {
                         return NotFound();
                     }
@@ -164,7 +163,7 @@ namespace TestCrud.Controllers
                         if (layout)
                         {
                             ViewBag.ErrorMessage = e.GetMessage();
-                            return View(client);
+                            return View(adresseNew);
                         }
                         else
                         {
@@ -179,10 +178,10 @@ namespace TestCrud.Controllers
 
             
 
-            return View(client);
+            return View(adresseNew);
         }
 
-        // GET: Client/Delete/5
+        // GET: AdresseNew/Delete/5
         public async Task<IActionResult> Delete(Guid? id, bool layout = true)
         {
             ViewBag.Layout = layout;
@@ -192,27 +191,27 @@ namespace TestCrud.Controllers
                 return NotFound();
             }
 
-            var client = await _context.Client
+            var adresseNew = await _context.AdresseNew
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (client == null)
+            if (adresseNew == null)
             {
                 return NotFound();
             }
 
-            return View(client);
+            return View(adresseNew);
         }
 
-        // POST: Client/Delete/5
+        // POST: AdresseNew/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(Guid id, bool layout = true)
         {
             ViewBag.Layout = layout;
-            var client = await _context.Client.FindAsync(id);
+            var adresseNew = await _context.AdresseNew.FindAsync(id);
 
             try
             {
-                _context.Client.Remove(client);
+                _context.AdresseNew.Remove(adresseNew);
                 await _context.SaveChangesAsync();
             }
             catch (Exception e)
@@ -220,7 +219,7 @@ namespace TestCrud.Controllers
                 if (layout)
                 {
                     ViewBag.ErrorMessage = e.GetMessage();
-                    return View(client);
+                    return View(adresseNew);
                 }
                 else
                 {
@@ -232,9 +231,9 @@ namespace TestCrud.Controllers
             return NoContent();
         }
 
-        private bool ClientExists(Guid id)
+        private bool AdresseNewExists(Guid id)
         {
-            return _context.Client.Any(e => e.Id == id);
+            return _context.AdresseNew.Any(e => e.Id == id);
         }
     }
 }
