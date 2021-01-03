@@ -26,7 +26,7 @@
 
     <PackageReference Include="AdminLteTheme.AspNetCore" Version="1.0.4" />
 
-    <PackageReference Include="EntitySignal.Server" Version="1.0.3.1" />
+    <PackageReference Include="EntitySignal.Server" Version="1.0.4.1" />
     <PackageReference Include="JqueryDataTables.ServerSide.AspNetCoreWeb" Version="4.0.0" />
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.0" />
